@@ -1,6 +1,6 @@
 # ![Samadkod](https://github.com/Samadkod/Canalplus_Experiences_Data/blob/main/twitter-min.jpg) 
 
-# Bonjour, je suis **Samad KODON** ! Bienvenue sur mon profil GitHub 👋
+# Bonjour! Bienvenue sur mon profil GitHub 👋
 
 ## 📬 Contactez-moi :
 <p align='left'>
