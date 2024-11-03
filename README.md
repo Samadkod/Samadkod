@@ -2,20 +2,6 @@
 
 # Bonjour, je suis **Samad KODON** ! Bienvenue sur mon profil GitHub 👋
 
-### 🔭 **Data Analyst & Scientist | Python | SQL | Data Visualisation & Machine Learning**
-
-- 🎓 **Major de promotion - Big Data & Data Science** - Université de Montpellier
-- 🎓 **Master en Quantification et Analyse Économique** - Université de Franche-Comté
-- 🚀 Actuellement à la recherche d'un **CDI en tant que Data Analyst**
-
-### 🌟 Quelques points forts :
-- Solides compétences en **analyse de données** et **modélisation prédictive** pour optimiser la prise de décision
-- Solides compétences en **gestion des données massives (Big Data)** et **qualité des données**
-- Passionné par l’utilisation des données pour des **insights stratégiques** et des **solutions innovantes**
-
-### 🔗 Découvrir mes projets :
-Jetez un œil à mes projets sur [GitHub](https://github.com/Samadkod) pour explorer des analyses de performance, des applications de machine learning et bien plus !
-
 ## 📬 Contactez-moi :
 <p align='left'>
   <a href="https://www.linkedin.com/in/skodon/"><img height="24" src="https://github.com/Samadkod/Canalplus_Experiences_Data/blob/main/linkedin.png" alt="LinkedIn"></a>&nbsp;&nbsp;
