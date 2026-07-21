@@ -4,11 +4,11 @@
 
 ## 👨‍💻 À propos de moi
 
-Data Analyst basé à **Paris**, je transforme des données brutes en décisions concrètes.
+Data Analyst basé à **Strasbourg** (mobile partout en France), je transforme des données brutes en décisions concrètes.
 Mon terrain de jeu : l'assurance, les RH, le retail, les télécoms et les médias — avec un goût
 particulier pour les **data apps interactives** qui mettent l'analyse entre les mains des équipes métier.
 
-- 🔭 En ce moment : exploration de la donnée vidéo & contenus (`video-content-lab`)
+- 💼 En ce moment : **Chargé de migration de données chez OCEA**
 - 📊 Ce que je fais le mieux : KPIs, qualité de données, modélisation prédictive, dashboards
 - 🌐 Mon portfolio : [samadkod.github.io](https://samadkod.github.io)
 
