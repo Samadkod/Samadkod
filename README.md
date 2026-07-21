@@ -22,12 +22,12 @@ particulier pour les **data apps interactives** qui mettent l'analyse entre les 
 
 ## 🚀 Projets phares
 
-| Projet | Description | Stack |
-|---|---|---|
-| 🩺 [**Prévention Santé CPAM**](https://github.com/Samadkod/app-prevention-sante) · [Démo live](https://app-prevention-sante-cpam-f9gmpfa2h7swk2wrppdsoi.streamlit.app/) | Scoring prédictif (Random Forest) de la non-participation aux campagnes de prévention santé : ciblage des relances, seuils ajustables, analyse par territoires (QPV/ZRR) | `Python` `scikit-learn` `Streamlit` |
-| 📉 [**Churn Prediction**](https://github.com/Samadkod/Churn_prediction) | Prédiction du churn télécoms par machine learning — ~80 % de détection, AUC 0.83, facteurs clés identifiés pour le marketing ciblé | `Python` `scikit-learn` `pandas` |
-| 💎 [**Social Listening Luxe**](https://github.com/Samadkod/social-listening-luxe) · [Démo live](https://social-listening-luxe-bjhqf4fartf8c3wqswcv7x.streamlit.app/) | Analyse des conversations Instagram/TikTok autour de Dior, Chanel & Louis Vuitton : tendances, sentiment, recommandations marketing | `Python` `Streamlit` `Plotly` |
-| 👥 [**Pilotage RH**](https://github.com/Samadkod/pilotage-rh-streamlit) · [Démo live](https://pilotage-rh-app-fqob5xhyhj3b5wfwduz5vr.streamlit.app) | Dashboard RH temps réel : effectifs, masse salariale, turnover, absentéisme, alertes automatiques par service, export Excel | `Python` `Streamlit` `Plotly` |
+| Projet | Description | Stack | Démo |
+|---|---|---|---|
+| 🩺 [**Prévention Santé CPAM**](https://github.com/Samadkod/app-prevention-sante) | Scoring prédictif (Random Forest) de la non-participation aux campagnes de prévention santé : ciblage des relances, seuils ajustables, analyse par territoires (QPV/ZRR) | `Python` `scikit-learn` `Streamlit` | <a href="https://app-prevention-sante-cpam-f9gmpfa2h7swk2wrppdsoi.streamlit.app/"><img src="https://img.shields.io/badge/▶_Ouvrir_l%27app-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" alt="Ouvrir l'app"></a> |
+| 📉 [**Churn Prediction**](https://github.com/Samadkod/Churn_prediction) | Prédiction du churn télécoms par machine learning — ~80 % de détection, AUC 0.83, facteurs clés identifiés pour le marketing ciblé | `Python` `scikit-learn` `pandas` | — |
+| 💎 [**Social Listening Luxe**](https://github.com/Samadkod/social-listening-luxe) | Analyse des conversations Instagram/TikTok autour de Dior, Chanel & Louis Vuitton : tendances, sentiment, recommandations marketing | `Python` `Streamlit` `Plotly` | <a href="https://social-listening-luxe-bjhqf4fartf8c3wqswcv7x.streamlit.app/"><img src="https://img.shields.io/badge/▶_Ouvrir_l%27app-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" alt="Ouvrir l'app"></a> |
+| 👥 [**Pilotage RH**](https://github.com/Samadkod/pilotage-rh-streamlit) | Dashboard RH temps réel : effectifs, masse salariale, turnover, absentéisme, alertes automatiques par service, export Excel | `Python` `Streamlit` `Plotly` | <a href="https://pilotage-rh-app-fqob5xhyhj3b5wfwduz5vr.streamlit.app/"><img src="https://img.shields.io/badge/▶_Ouvrir_l%27app-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" alt="Ouvrir l'app"></a> |
 
 ## 🔧 Compétences techniques
 
