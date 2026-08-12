@@ -31,6 +31,12 @@ from src.quality_engine import (
     score_global,
     scorecard_dimension,
 )
+from src.solvabilite2_impact import (
+    calculer_provisions_techniques,
+    calculer_scr_mcr,
+    formatter_montant,
+    generer_rapport_s2,
+)
 
 st.set_page_config(
     page_title="Sentinel QDD-S2",
@@ -80,14 +86,20 @@ rapport = rapport_detaille(resultats)
 scorecard = scorecard_dimension(resultats)
 score = score_global(resultats)
 
+# Impact Solvabilité 2
+rapport_s2 = generer_rapport_s2(datasets, resultats, rapport)
+provisions = rapport_s2["provisions"]
+solvabilite = rapport_s2["solvabilite"]
+
 # --------------------------------------------------------------------------- #
 # En-tête + KPI
 # --------------------------------------------------------------------------- #
-st.title("Dispositif Qualité des Données — Solvabilité 2")
+st.title("🛡️ Dispositif Qualité des Données — Solvabilité 2")
 st.markdown(
-    "Chaîne de fiabilisation des données alimentant les provisions techniques "
-    "et les **QRT**. Contrôles structurés sur les dimensions réglementaires "
-    "**EIOPA** (Exhaustivité · Exactitude · Cohérence)."
+    "**Chaîne de fiabilisation** des données alimentant les provisions techniques, "
+    "le Best Estimate, et les rapports QRT. Contrôles structurés sur les dimensions réglementaires "
+    "**EIOPA** (Exhaustivité · Exactitude · Cohérence · Unicité · Intégrité). "
+    "Contexte : Assurance BTP (RC, Décennale, Flotte)."
 )
 
 total_anomalies = int(rapport["Anomalies"].sum())
@@ -96,32 +108,78 @@ nb_bloquants = int(
 )
 nb_ctrl_ko = int((rapport["Statut"] == "KO").sum())
 
+# KPIs Qualité
 c1, c2, c3, c4, c5 = st.columns(5)
-c1.metric("Score QDD global", f"{score} %", help="Moyenne des taux de conformité pondérée par la criticité.")
-c2.metric("Contrôles exécutés", len(resultats))
-c3.metric("Contrôles en échec", nb_ctrl_ko, delta=f"-{nb_ctrl_ko}" if nb_ctrl_ko else "0",
+c1.metric("Score QDD", f"{score} %", help="Taux de conformité global pondéré par criticité.")
+c2.metric("Contrôles exécutés", len(resultats), help=f"Dimension QDD : {', '.join(sorted(rapport['Dimension'].unique()))}")
+c3.metric("Contrôles KO", nb_ctrl_ko, delta=f"-{nb_ctrl_ko}" if nb_ctrl_ko else "✅",
           delta_color="inverse")
 c4.metric("Anomalies détectées", f"{total_anomalies:,}".replace(",", " "))
-c5.metric("Anomalies bloquantes", nb_bloquants,
-          delta="Attention" if nb_bloquants else "RAS",
-          delta_color="inverse" if nb_bloquants else "off")
+c5.metric(f"{rapport_s2['risque_qdd']}", "Risque QDD",
+          help="Évaluation du risque associé aux anomalies détectées.")
+
+st.divider()
+
+# KPIs Solvabilité 2
+st.subheader("📊 Impact Solvabilité 2")
+col_s2_1, col_s2_2, col_s2_3, col_s2_4 = st.columns(4)
+
+with col_s2_1:
+    st.metric(
+        "Best Estimate",
+        formatter_montant(provisions["best_estimate_degrade"]),
+        delta=f"{formatter_montant(-provisions['impact_financier'])} (ajusté pour qualité)",
+        delta_color="inverse",
+        help="Provisions techniques actualisées en fonction de la qualité des données."
+    )
+
+with col_s2_2:
+    st.metric(
+        "Ratio SCR",
+        f"{solvabilite['ratio_scr']:.1f} %",
+        delta="Conforme" if solvabilite['ratio_scr'] >= 100 else "Non conforme",
+        delta_color="off" if solvabilite['ratio_scr'] >= 100 else "inverse",
+        help="Capital de solvabilité requis : doit être ≥ 100%."
+    )
+
+with col_s2_3:
+    st.metric(
+        "Ratio MCR",
+        f"{solvabilite['ratio_mcr']:.1f} %",
+        delta="Conforme" if solvabilite['ratio_mcr'] >= 100 else "ALERTE",
+        delta_color="off" if solvabilite['ratio_mcr'] >= 100 else "inverse",
+        help="Minimum Capital Requirement : seuil critique."
+    )
+
+with col_s2_4:
+    statut = solvabilite['statut_s2']
+    st.metric(
+        "Statut S2",
+        statut.split()[0],  # ✅ ou 🚫
+        delta=statut.split()[1] if len(statut.split()) > 1 else "",
+        help="État global de solvabilité de l'organisme."
+    )
 
 if nb_bloquants:
     st.error(
-        f"🚫 {nb_bloquants} contrôle(s) **bloquant(s)** en échec — "
-        "les données ne sont pas éligibles à l'alimentation des calculs S2 en l'état."
+        f"🚫 **{nb_bloquants} contrôle(s) bloquant(s) en échec** — "
+        "Les données ne sont **PAS** éligibles aux calculs S2 en l'état. Action urgente requise."
     )
 else:
-    st.success("✅ Aucun contrôle bloquant en échec.")
+    st.success(
+        f"✅ **Aucun contrôle bloquant** — Données éligibles S2. "
+        f"Fiabilité : {provisions['ratio_fiabilite']:.1f} %"
+    )
 
 st.divider()
 
 # --------------------------------------------------------------------------- #
 # Onglets
 # --------------------------------------------------------------------------- #
-tab_synth, tab_ctrl, tab_anom, tab_dict, tab_lin, tab_audit = st.tabs(
+tab_synth, tab_s2, tab_ctrl, tab_anom, tab_dict, tab_lin, tab_audit = st.tabs(
     [
         "📊 Synthèse qualité",
+        "💰 Solvabilité 2 — Impact",
         "✅ Contrôles",
         "🔎 Anomalies",
         "📖 Dictionnaire",
@@ -191,6 +249,121 @@ with tab_synth:
         }
     )
     st.dataframe(vol, use_container_width=True, hide_index=True)
+
+# ---- Solvabilité 2 — Impact ---- #
+with tab_s2:
+    st.subheader("💰 Impact des anomalies QDD sur Solvabilité 2")
+    st.caption(
+        "La qualité des données impacte directement les provisions techniques et le ratio de solvabilité. "
+        "Cette section montre l'effet financier des anomalies détectées."
+    )
+
+    # Row 1: Provisions techniques
+    st.markdown("#### Provisions Techniques (Best Estimate)")
+    prov_col1, prov_col2 = st.columns(2)
+
+    with prov_col1:
+        st.markdown("**Scénario : Données sans anomalies**")
+        st.info(f"Best Estimate : {formatter_montant(provisions['best_estimate_ideal'])}\n\n"
+                f"Exposition totale : {formatter_montant(provisions['exposition_totale'])}\n\n"
+                f"Montant sinistré : {formatter_montant(provisions['montant_sinistre'])}")
+
+    with prov_col2:
+        st.markdown("**Scénario : Avec anomalies détectées**")
+        delta_val = provisions['impact_financier']
+        delta_pct = (delta_val / provisions['best_estimate_ideal'] * 100) if provisions['best_estimate_ideal'] > 0 else 0
+        st.warning(f"Best Estimate : {formatter_montant(provisions['best_estimate_degrade'])}\n\n"
+                   f"**Impact financier : -{formatter_montant(delta_val)}** (-{delta_pct:.1f} %)\n\n"
+                   f"Fiabilité données : {provisions['ratio_fiabilite']:.1f} %")
+
+    st.divider()
+
+    # Row 2: SCR vs MCR
+    st.markdown("#### Exigences de Capital Solvabilité 2")
+    scr_col1, scr_col2, scr_col3 = st.columns(3)
+
+    with scr_col1:
+        st.markdown("**📊 SCR (Solvency Capital Requirement)**")
+        fig_scr = go.Figure(
+            go.Indicator(
+                mode="gauge+number+delta",
+                value=solvabilite['ratio_scr'],
+                title="Ratio SCR (%)",
+                domain={"x": [0, 1], "y": [0, 1]},
+                gauge={
+                    "axis": {"range": [0, 150]},
+                    "bar": {"color": "#16a34a" if solvabilite['ratio_scr'] >= 100 else "#dc2626"},
+                    "steps": [
+                        {"range": [0, 100], "color": "#fee2e2"},
+                        {"range": [100, 150], "color": "#dcfce7"},
+                    ],
+                    "threshold": {
+                        "line": {"color": "red", "width": 4},
+                        "thickness": 0.75,
+                        "value": 100,
+                    },
+                },
+                delta={"reference": 100, "suffix": " vs cible"},
+            )
+        )
+        fig_scr.update_layout(height=300, margin=dict(l=10, r=10, t=30, b=10))
+        st.plotly_chart(fig_scr, use_container_width=True)
+        st.caption(f"Capital requis : {formatter_montant(solvabilite['scr'])}")
+
+    with scr_col2:
+        st.markdown("**💎 MCR (Minimum Capital Requirement)**")
+        fig_mcr = go.Figure(
+            go.Indicator(
+                mode="gauge+number+delta",
+                value=solvabilite['ratio_mcr'],
+                title="Ratio MCR (%)",
+                domain={"x": [0, 1], "y": [0, 1]},
+                gauge={
+                    "axis": {"range": [0, 150]},
+                    "bar": {"color": "#16a34a" if solvabilite['ratio_mcr'] >= 100 else "#dc2626"},
+                    "steps": [
+                        {"range": [0, 100], "color": "#fee2e2"},
+                        {"range": [100, 150], "color": "#dcfce7"},
+                    ],
+                    "threshold": {
+                        "line": {"color": "red", "width": 4},
+                        "thickness": 0.75,
+                        "value": 100,
+                    },
+                },
+                delta={"reference": 100, "suffix": " vs minimum"},
+            )
+        )
+        fig_mcr.update_layout(height=300, margin=dict(l=10, r=10, t=30, b=10))
+        st.plotly_chart(fig_mcr, use_container_width=True)
+        st.caption(f"Minimum requis : {formatter_montant(solvabilite['mcr'])}")
+
+    with scr_col3:
+        st.markdown("**💼 Fonds Propres Disponibles**")
+        fig_fp = go.Figure(data=[
+            go.Bar(name="Fonds Propres", x=["Disponible"], y=[solvabilite['fonds_propres']], marker_color="#3b82f6"),
+            go.Bar(name="SCR", x=["Disponible"], y=[solvabilite['scr']], marker_color="#f59e0b"),
+            go.Bar(name="MCR", x=["Disponible"], y=[solvabilite['mcr']], marker_color="#dc2626"),
+        ])
+        fig_fp.update_layout(
+            barmode="group",
+            height=300,
+            margin=dict(l=10, r=10, t=30, b=10),
+            legend=dict(x=0, y=1),
+            yaxis_title="Montant (€)",
+        )
+        st.plotly_chart(fig_fp, use_container_width=True)
+        st.caption(f"Fonds propres : {formatter_montant(solvabilite['fonds_propres'])}")
+
+    st.divider()
+
+    # Row 3: Recommandations
+    st.markdown("#### 📋 Recommandations Actions")
+    recs = rapport_s2["recommandations"]
+
+    for rec in recs:
+        with st.expander(f"{rec['severite']} — {rec['action']}"):
+            st.write(rec['detail'])
 
 # ---- Contrôles ---- #
 with tab_ctrl:
