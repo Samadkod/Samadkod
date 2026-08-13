@@ -75,33 +75,40 @@ def calculer_provisions_techniques(datasets: dict, resultats: list) -> dict:
 
 def calculer_scr_mcr(provisions: dict) -> dict:
     """
-    Simule le calcul du SCR et MCR basés sur les provisions.
+    Simule le calcul du SCR et MCR basés sur les provisions réalistes.
 
     Solvabilité 2 impose :
     - SCR = capital requis pour survivre à une crise majeure (99.5% confiance)
-    - MCR = seuil minimum absolu (très strict)
+    - MCR = seuil minimum absolu (~25-33% du SCR)
 
-    Simplifié:
-    - SCR ≈ Best Estimate × 20% (exemple)
-    - MCR ≈ SCR × 25%
+    Réaliste:
+    - SCR ≈ Best Estimate × 15% à 25% (dépend du risque)
+    - MCR ≈ SCR × 30%
+    - Fonds propres = Best Estimate × 30% (marge prudentielle)
     """
     best_estimate = provisions["best_estimate_degrade"]
 
     # SCR : capital de solvabilité requis
-    # Hypothèse simplifiée: 20% du Best Estimate (en vrai, c'est bcp plus complexe)
-    scr = best_estimate * 0.20
+    # Hypothèse réaliste: 18% du Best Estimate pour assurance IARD
+    scr = best_estimate * 0.18
 
     # MCR : capital minimum requis
-    # Hypothèse: 25% du SCR
-    mcr = scr * 0.25
+    # Hypothèse réaliste: 30% du SCR (pas 25%)
+    mcr = scr * 0.30
 
-    # Simulation des fonds propres disponibles
-    # Hypothèse: fonds propres = 30% de l'exposition
-    fonds_propres = provisions["exposition_totale"] * 0.30
+    # Fonds propres disponibles
+    # Hypothèse réaliste: marges prudentielles = 35% du BE
+    # (pas 30% de l'exposition brute!)
+    fonds_propres = best_estimate * 0.35
 
     # Ratios de solvabilité
+    # Normalement entre 100% et 300% en production
     ratio_scr = (fonds_propres / scr) * 100 if scr > 0 else 100
     ratio_mcr = (fonds_propres / mcr) * 100 if mcr > 0 else 100
+
+    # Cap les ratios à 200% pour la visualisation (sinon les gauges sont nulles)
+    ratio_scr = min(ratio_scr, 200)
+    ratio_mcr = min(ratio_mcr, 200)
 
     # Zones de conformité
     conformite_scr = "✅ Conforme" if ratio_scr >= 100 else "⚠️ Attention"
