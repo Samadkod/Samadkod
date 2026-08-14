@@ -1,0 +1,1063 @@
+{
+  "2024-W33": {
+    "week": "2024-W33",
+    "processed_date": "2026-08-14T22:43:12.563183",
+    "source_file": "4b2c4fdc-erreursvalidationEST_1.txt",
+    "total_blocking_errors": 250,
+    "unique_error_types": 61,
+    "affected_sites": [
+      "AB653",
+      "AF796",
+      "AF872",
+      "AH687",
+      "AI362",
+      "AI400",
+      "AI428",
+      "AI888",
+      "AJ235",
+      "AL246",
+      "AZ917",
+      "BE228",
+      "BF886",
+      "BH120",
+      "BI043",
+      "BI431",
+      "BI692",
+      "BJ296",
+      "BJ407",
+      "BK123",
+      "BK124",
+      "BK130",
+      "BK207",
+      "BK219",
+      "BK256",
+      "BK259",
+      "BK294",
+      "BK357",
+      "BK404",
+      "BK970",
+      "BL123",
+      "BL652",
+      "BL754",
+      "BM061",
+      "BM070",
+      "BM093",
+      "BM096",
+      "BM161",
+      "BM364",
+      "BM497",
+      "BM591",
+      "BN136",
+      "BN189",
+      "BN370",
+      "BN371",
+      "BN455",
+      "BO289",
+      "BO848",
+      "BO913",
+      "BO959",
+      "BO988",
+      "BP038",
+      "BP071",
+      "BP182",
+      "BP188",
+      "BP218",
+      "BP267",
+      "BP477",
+      "BP523",
+      "BP528",
+      "BP550",
+      "BP583",
+      "BP627",
+      "BP629",
+      "BP630",
+      "BP640",
+      "BP641",
+      "BP642",
+      "BP792",
+      "BP795",
+      "BP866",
+      "BP882",
+      "BP900",
+      "BP933",
+      "BP973",
+      "BQ301",
+      "BQ302",
+      "BQ313",
+      "BQ323",
+      "BQ398",
+      "BQ404",
+      "BQ433",
+      "BQ545",
+      "BQ547",
+      "BQ599",
+      "BR122",
+      "BR436",
+      "BV917",
+      "BZ851",
+      "BZ871",
+      "CA008",
+      "CA116",
+      "CA204",
+      "CA654",
+      "CB062",
+      "CB454",
+      "CB507",
+      "CB680",
+      "CB794",
+      "CB808",
+      "CC448",
+      "CC503",
+      "CC515",
+      "CD101",
+      "CD312",
+      "CD682",
+      "CD895",
+      "CD914",
+      "CE338",
+      "CE663",
+      "CE749",
+      "CF070",
+      "CF113",
+      "CF229",
+      "CG015",
+      "CG346",
+      "CG401",
+      "CG470",
+      "CG591",
+      "CG745",
+      "CG797",
+      "CG800",
+      "CG949",
+      "CH057",
+      "CH068",
+      "CH497",
+      "CH817",
+      "CI163",
+      "CI297",
+      "CI535",
+      "CI595",
+      "CI618",
+      "CI722",
+      "CI724",
+      "CI916",
+      "CI957",
+      "CI996",
+      "CJ001",
+      "CJ006",
+      "CJ057",
+      "CJ138",
+      "CJ370",
+      "CJ395",
+      "CJ398",
+      "CJ433",
+      "CJ541",
+      "CJ717",
+      "CK193",
+      "CK194",
+      "CK372",
+      "CL035",
+      "CL135",
+      "CL841",
+      "CL869",
+      "CM005",
+      "CM372",
+      "CM916",
+      "CN987",
+      "CO012",
+      "CO047",
+      "CO068",
+      "CO115",
+      "CO527",
+      "CO721",
+      "CO831",
+      "CP319",
+      "CP678",
+      "CQ151",
+      "CQ837",
+      "CQ841",
+      "CR387",
+      "CR458",
+      "CS021",
+      "CS096",
+      "CS494",
+      "CT454",
+      "CT668",
+      "CT792",
+      "CT987",
+      "CV263",
+      "CV600",
+      "CW250",
+      "CZ671",
+      "CZ842",
+      "DA015",
+      "DB676",
+      "DB804"
+    ],
+    "num_affected_sites": 187,
+    "resolved_sites": [],
+    "num_resolved": 0,
+    "aggregated_errors": {
+      "21104_Le local n'existe pas.": {
+        "scope": "Patrimoine - PDS Eau Froide",
+        "error_id": "21104",
+        "message": "Le local n'existe pas.",
+        "sites_affected": [
+          "AF796",
+          "AI362",
+          "AI400",
+          "AI428",
+          "AI888",
+          "AJ235",
+          "BI431",
+          "BJ407",
+          "BK219",
+          "BK970",
+          "BL652",
+          "BR436",
+          "CA654",
+          "CB680",
+          "CD914",
+          "CE663",
+          "CJ395",
+          "CK193",
+          "CK194",
+          "CL841",
+          "CM005",
+          "CR387"
+        ],
+        "total_occurrences": 92,
+        "criticite": "Error",
+        "num_sites": 22
+      },
+      "40722_Le type de Gestion de Mutation ECS et Eau Chaude doivent être identiques.": {
+        "scope": "Valorisation - Répartition",
+        "error_id": "40722",
+        "message": "Le type de Gestion de Mutation ECS et Eau Chaude doivent être identiques.",
+        "sites_affected": [
+          "AF796",
+          "BQ302",
+          "CK372",
+          "CM372",
+          "CT454",
+          "CT668",
+          "CT792",
+          "CW250",
+          "DB676"
+        ],
+        "total_occurrences": 23,
+        "criticite": "Error",
+        "num_sites": 9
+      },
+      "30115_Seuls les fluides eau froide, eau chaude et CET peuvent faire partie d'une même PCC.": {
+        "scope": "Exploitation - Période consommation",
+        "error_id": "30115",
+        "message": "Seuls les fluides eau froide, eau chaude et CET peuvent faire partie d'une même PCC.",
+        "sites_affected": [
+          "AF872",
+          "BF886",
+          "BI043",
+          "BL754",
+          "BN136",
+          "BO289",
+          "BP218",
+          "BP583",
+          "BP933",
+          "CB808",
+          "CC515",
+          "CD101",
+          "CE338",
+          "CF070",
+          "CF113",
+          "CF229",
+          "CG745",
+          "CG797",
+          "CI595",
+          "CI722",
+          "CI996",
+          "CJ057",
+          "CL135",
+          "CO721",
+          "CQ837",
+          "CV600",
+          "CZ671"
+        ],
+        "total_occurrences": 29,
+        "criticite": "Error",
+        "num_sites": 27
+      },
+      "10724_Les périodes de consommation ne sont pas renseignées.": {
+        "scope": "Contrat - Eau Froide",
+        "error_id": "10724",
+        "message": "Les périodes de consommation ne sont pas renseignées.",
+        "sites_affected": [
+          "BI043",
+          "BN136",
+          "CF113",
+          "CI722",
+          "CI996"
+        ],
+        "total_occurrences": 5,
+        "criticite": "Error",
+        "num_sites": 5
+      },
+      "21303_Le compteur n'existe pas.": {
+        "scope": "Patrimoine - PDS Accessoire",
+        "error_id": "21303",
+        "message": "Le compteur n'existe pas.",
+        "sites_affected": [
+          "AL246",
+          "BI692",
+          "BJ296",
+          "BK256",
+          "BM096",
+          "BN136",
+          "BN370",
+          "BO913",
+          "BP038",
+          "BP267",
+          "BV917",
+          "CA008",
+          "CB454",
+          "CG346",
+          "CG401",
+          "CH817",
+          "CI163",
+          "CI957",
+          "CI996",
+          "CJ370",
+          "CL869",
+          "CQ151",
+          "CZ842"
+        ],
+        "total_occurrences": 24,
+        "criticite": "Error",
+        "num_sites": 23
+      },
+      "23008_Le PDS EF possède une dépose définitive du compteur": {
+        "scope": "Patrimoine - PDS Evènements (Codes Obs)",
+        "error_id": "23008",
+        "message": "Le PDS EF possède une dépose définitive du compteur",
+        "sites_affected": [
+          "BK123",
+          "BK124",
+          "BM364",
+          "CI618"
+        ],
+        "total_occurrences": 4,
+        "criticite": "Error",
+        "num_sites": 4
+      },
+      "21360_Le PDS général doit avoir au moins un compteur historique dans l'onglet S_PdsGenerauxCompteurs.": {
+        "scope": "Patrimoine - PDS Général",
+        "error_id": "21360",
+        "message": "Le PDS général doit avoir au moins un compteur historique dans l'onglet S_PdsGenerauxCompteurs.",
+        "sites_affected": [
+          "BK130"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "23204_Le PDS virtuel n'est ni un RFC ni un PAS.": {
+        "scope": "Patrimoine - PDS Evènements (Codes Obs)",
+        "error_id": "23204",
+        "message": "Le PDS virtuel n'est ni un RFC ni un PAS.",
+        "sites_affected": [
+          "BK130",
+          "CC448",
+          "CC503"
+        ],
+        "total_occurrences": 6,
+        "criticite": "Error",
+        "num_sites": 3
+      },
+      "30114_Les périodes de consommation doivent être consécutives.": {
+        "scope": "Exploitation - Exercice Comptable",
+        "error_id": "30114",
+        "message": "Les périodes de consommation doivent être consécutives.",
+        "sites_affected": [
+          "BL754",
+          "BP218",
+          "CC515"
+        ],
+        "total_occurrences": 6,
+        "criticite": "Error",
+        "num_sites": 3
+      },
+      "40017_Le traitement correspondant à la période de consommation est manquant.": {
+        "scope": "Exploitation - Période consommation",
+        "error_id": "40017",
+        "message": "Le traitement correspondant à la période de consommation est manquant.",
+        "sites_affected": [
+          "BL754",
+          "CC515",
+          "CF070",
+          "CG745",
+          "CO721",
+          "CS021",
+          "CS494"
+        ],
+        "total_occurrences": 7,
+        "criticite": "Error",
+        "num_sites": 7
+      },
+      "21405_Le pds n'existe pas.": {
+        "scope": "Patrimoine - Echec Maintenance",
+        "error_id": "21405",
+        "message": "Le pds n'existe pas.",
+        "sites_affected": [
+          "BK259",
+          "BK294",
+          "BK357",
+          "BM061",
+          "BM070",
+          "BM093",
+          "BM497",
+          "BM591",
+          "BO289",
+          "BO959",
+          "BQ323",
+          "BQ404"
+        ],
+        "total_occurrences": 12,
+        "criticite": "Error",
+        "num_sites": 12
+      },
+      "40019_Les périodes de chauffe ne doivent pas se chevaucher ou être contigüe.": {
+        "scope": "Valorisation - Traitement",
+        "error_id": "40019",
+        "message": "Les périodes de chauffe ne doivent pas se chevaucher ou être contigüe.",
+        "sites_affected": [
+          "BO988",
+          "BP528",
+          "BP550",
+          "CO047",
+          "CT987",
+          "DA015",
+          "DB676"
+        ],
+        "total_occurrences": 12,
+        "criticite": "Error",
+        "num_sites": 7
+      },
+      "10702_Le modele d'appareil préconisé doit être renseigné.": {
+        "scope": "Contrat - Eau Froide",
+        "error_id": "10702",
+        "message": "Le modele d'appareil préconisé doit être renseigné.",
+        "sites_affected": [
+          "BP071",
+          "CK372",
+          "CL035"
+        ],
+        "total_occurrences": 3,
+        "criticite": "Error",
+        "num_sites": 3
+      },
+      "10727_En présence d'une prestation de relève il doit exister au moins un device actif.": {
+        "scope": "Contrat - Eau Froide",
+        "error_id": "10727",
+        "message": "En présence d'une prestation de relève il doit exister au moins un device actif.",
+        "sites_affected": [
+          "BP071",
+          "CK372",
+          "CL035"
+        ],
+        "total_occurrences": 3,
+        "criticite": "Error",
+        "num_sites": 3
+      },
+      "40014_Une consommation doit être fournie pour le scope Traitement, Local, Fluide, Distribution.": {
+        "scope": "Valorisation - Consommation Local",
+        "error_id": "40014",
+        "message": "Une consommation doit être fournie pour le scope Traitement, Local, Fluide, Distribution.",
+        "sites_affected": [
+          "BP188",
+          "CB062"
+        ],
+        "total_occurrences": 16,
+        "criticite": "Error",
+        "num_sites": 2
+      },
+      "21129_Le modèle de l'appareil renseigné est pour le fluide EC qui ne correspond pas au fluide du PDS (EF).": {
+        "scope": "Patrimoine - PDS Eau Froide",
+        "error_id": "21129",
+        "message": "Le modèle de l'appareil renseigné est pour le fluide EC qui ne correspond pas au fluide du PDS (EF).",
+        "sites_affected": [
+          "AF872",
+          "BE228",
+          "BN371",
+          "BN455",
+          "BP477",
+          "BP523",
+          "BQ599",
+          "CB062"
+        ],
+        "total_occurrences": 10,
+        "criticite": "Error",
+        "num_sites": 8
+      },
+      "40810_Le montant doit être renseigné.": {
+        "scope": "Valorisation - Répartition Ligne Frais",
+        "error_id": "40810",
+        "message": "Le montant doit être renseigné.",
+        "sites_affected": [
+          "BL123",
+          "BP627",
+          "BP629",
+          "BP640",
+          "BP641",
+          "BP642",
+          "BP792",
+          "BP795",
+          "BQ301",
+          "BQ302",
+          "BQ547",
+          "BR436",
+          "BZ871",
+          "CC515",
+          "CD312",
+          "CE338",
+          "CG015",
+          "CG800",
+          "CH068",
+          "CH497",
+          "CI916",
+          "CJ138",
+          "CJ395",
+          "CJ433",
+          "CJ717",
+          "CO527",
+          "CP678"
+        ],
+        "total_occurrences": 46,
+        "criticite": "Error",
+        "num_sites": 27
+      },
+      "21004_Le local n'existe pas.": {
+        "scope": "Patrimoine - PDS Eau Chaude",
+        "error_id": "21004",
+        "message": "Le local n'existe pas.",
+        "sites_affected": [
+          "BR436",
+          "CB680",
+          "CD914",
+          "CR387"
+        ],
+        "total_occurrences": 11,
+        "criticite": "Error",
+        "num_sites": 4
+      },
+      "30116_Il doit exister une prestation de relève pour les fluides présents dans une PCC.": {
+        "scope": "Exploitation - Période consommation",
+        "error_id": "30116",
+        "message": "Il doit exister une prestation de relève pour les fluides présents dans une PCC.",
+        "sites_affected": [
+          "BK404",
+          "BP973",
+          "CB794",
+          "CD682",
+          "CI535"
+        ],
+        "total_occurrences": 42,
+        "criticite": "Error",
+        "num_sites": 5
+      },
+      "10713_En présence d'une prestation de relève il doit exister une prestation de pose.": {
+        "scope": "Contrat - Eau Froide",
+        "error_id": "10713",
+        "message": "En présence d'une prestation de relève il doit exister une prestation de pose.",
+        "sites_affected": [
+          "CM005"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "10237_Le site possède un contrat suspendu.": {
+        "scope": "Contrat - Infos générales",
+        "error_id": "10237",
+        "message": "Le site possède un contrat suspendu.",
+        "sites_affected": [
+          "CP319"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "40005_Il doit y avoir au moins une période de chauffe renseignée lorsque le traitement concerne du RFC et/ou du CET.": {
+        "scope": "Valorisation - Traitement",
+        "error_id": "40005",
+        "message": "Il doit y avoir au moins une période de chauffe renseignée lorsque le traitement concerne du RFC et/ou du CET.",
+        "sites_affected": [
+          "CJ138",
+          "CV263"
+        ],
+        "total_occurrences": 2,
+        "criticite": "Error",
+        "num_sites": 2
+      },
+      "30214_Au moins un fluide doit être renseigné pour la période de répartition.": {
+        "scope": "Exploitation - Période répartition",
+        "error_id": "30214",
+        "message": "Au moins un fluide doit être renseigné pour la période de répartition.",
+        "sites_affected": [
+          "DB804"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "_Une erreur est survenue lors de la validation du site \"CM916\" : Invalid object name 'dwh.ContratSite'.": {
+        "scope": "",
+        "error_id": "",
+        "message": "Une erreur est survenue lors de la validation du site \"CM916\" : Invalid object name 'dwh.ContratSite'.",
+        "sites_affected": [
+          "CM916"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "_Une erreur est survenue lors de la validation du site \"CS096\" : Invalid object name 'dwh.ContratSite'.": {
+        "scope": "",
+        "error_id": "",
+        "message": "Une erreur est survenue lors de la validation du site \"CS096\" : Invalid object name 'dwh.ContratSite'.",
+        "sites_affected": [
+          "CS096"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "40817_Seul le poste ChauffageEtEcs peut être attribué pour des frais d'énergie avec ECS dans le mode de répartition pourcentage.": {
+        "scope": "Valorisation - Répartition Ligne Frais",
+        "error_id": "40817",
+        "message": "Seul le poste ChauffageEtEcs peut être attribué pour des frais d'énergie avec ECS dans le mode de répartition pourcentage.",
+        "sites_affected": [
+          "AB653",
+          "DA015"
+        ],
+        "total_occurrences": 4,
+        "criticite": "Error",
+        "num_sites": 2
+      },
+      "22603_L'occupation n'existe pas.": {
+        "scope": "Patrimoine - Occupation Acompte",
+        "error_id": "22603",
+        "message": "L'occupation n'existe pas.",
+        "sites_affected": [
+          "AH687",
+          "CA116",
+          "CA204"
+        ],
+        "total_occurrences": 4,
+        "criticite": "Error",
+        "num_sites": 3
+      },
+      "10219_L'adresse du client contractuel doit être renseignée.": {
+        "scope": "Contrat - Infos générales",
+        "error_id": "10219",
+        "message": "L'adresse du client contractuel doit être renseignée.",
+        "sites_affected": [
+          "BH120"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "10220_Le code postal du client contractuel doit être renseigné.": {
+        "scope": "Contrat - Infos générales",
+        "error_id": "10220",
+        "message": "Le code postal du client contractuel doit être renseigné.",
+        "sites_affected": [
+          "BH120"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "10221_La ville du client contractuel doit être renseignée.": {
+        "scope": "Contrat - Infos générales",
+        "error_id": "10221",
+        "message": "La ville du client contractuel doit être renseignée.",
+        "sites_affected": [
+          "BH120"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "30404_Le message de la note doit être renseigné.": {
+        "scope": "Exploitation - Note",
+        "error_id": "30404",
+        "message": "Le message de la note doit être renseigné.",
+        "sites_affected": [
+          "BK207",
+          "BP182"
+        ],
+        "total_occurrences": 2,
+        "criticite": "Error",
+        "num_sites": 2
+      },
+      "22910_Le PDS général possède une Pose, non initiale, qui n'est pas précédée par une Dépose.": {
+        "scope": "Patrimoine - PDS Evènements (Codes Obs)",
+        "error_id": "22910",
+        "message": "Le PDS général possède une Pose, non initiale, qui n'est pas précédée par une Dépose.",
+        "sites_affected": [
+          "BM161",
+          "BM364"
+        ],
+        "total_occurrences": 2,
+        "criticite": "Error",
+        "num_sites": 2
+      },
+      "22905_Le PDS EF possède une Pose, non initiale, qui n'est pas précédée par une Dépose.": {
+        "scope": "Patrimoine - PDS Evènements (Codes Obs)",
+        "error_id": "22905",
+        "message": "Le PDS EF possède une Pose, non initiale, qui n'est pas précédée par une Dépose.",
+        "sites_affected": [
+          "BM364"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "22809_Il manque la valeur de la clé libre pour un ou plusieurs exercices": {
+        "scope": "Patrimoine - Local Cle Libre",
+        "error_id": "22809",
+        "message": "Il manque la valeur de la clé libre pour un ou plusieurs exercices",
+        "sites_affected": [
+          "BN189",
+          "CG591",
+          "CI595"
+        ],
+        "total_occurrences": 13,
+        "criticite": "Error",
+        "num_sites": 3
+      },
+      "40814_Une seule clé, libre ou pré-définie, peut être renseignée.": {
+        "scope": "Valorisation - Répartition Ligne Frais",
+        "error_id": "40814",
+        "message": "Une seule clé, libre ou pré-définie, peut être renseignée.",
+        "sites_affected": [
+          "BN189",
+          "CG591"
+        ],
+        "total_occurrences": 15,
+        "criticite": "Error",
+        "num_sites": 2
+      },
+      "20902_Impossible de réaliser une pose sur un pds sans radiateur déclaré.": {
+        "scope": "Patrimoine - Pose RFC",
+        "error_id": "20902",
+        "message": "Impossible de réaliser une pose sur un pds sans radiateur déclaré.",
+        "sites_affected": [
+          "BO848",
+          "CG949",
+          "CH057",
+          "CI297",
+          "CJ001",
+          "CJ006",
+          "CJ541"
+        ],
+        "total_occurrences": 9,
+        "criticite": "Error",
+        "num_sites": 7
+      },
+      "21714_Le modèle n'existe pas dans le référentiel Imago.": {
+        "scope": "Patrimoine - Maintenance Dépose/Pose Eau chaude",
+        "error_id": "21714",
+        "message": "Le modèle n'existe pas dans le référentiel Imago.",
+        "sites_affected": [
+          "BP627",
+          "BP629",
+          "BP630"
+        ],
+        "total_occurrences": 65,
+        "criticite": "Error",
+        "num_sites": 3
+      },
+      "21028_Le modèle de l'appareil renseigné est pour le fluide EF qui ne correspond pas au fluide du PDS (EC).": {
+        "scope": "Patrimoine - PDS Eau Chaude",
+        "error_id": "21028",
+        "message": "Le modèle de l'appareil renseigné est pour le fluide EF qui ne correspond pas au fluide du PDS (EC).",
+        "sites_affected": [
+          "BP629",
+          "BQ599",
+          "CO047",
+          "CO068",
+          "CO831",
+          "CP678",
+          "CQ841"
+        ],
+        "total_occurrences": 150,
+        "criticite": "Error",
+        "num_sites": 7
+      },
+      "22904_Le PDS EC possède une Pose, non initiale, qui n'est pas précédée par une Dépose.": {
+        "scope": "Patrimoine - PDS Evènements (Codes Obs)",
+        "error_id": "22904",
+        "message": "Le PDS EC possède une Pose, non initiale, qui n'est pas précédée par une Dépose.",
+        "sites_affected": [
+          "BP629",
+          "CE749",
+          "CI724",
+          "CN987"
+        ],
+        "total_occurrences": 5,
+        "criticite": "Error",
+        "num_sites": 4
+      },
+      "23009_Le PDS EC possède une dépose définitive du compteur": {
+        "scope": "Patrimoine - PDS Evènements (Codes Obs)",
+        "error_id": "23009",
+        "message": "Le PDS EC possède une dépose définitive du compteur",
+        "sites_affected": [
+          "BP629",
+          "CI724",
+          "CN987"
+        ],
+        "total_occurrences": 4,
+        "criticite": "Error",
+        "num_sites": 3
+      },
+      "40012_Une consommation doit être fournie pour le scope Traitement, PDS General, Fluide.": {
+        "scope": "Valorisation - Consommation PDS",
+        "error_id": "40012",
+        "message": "Une consommation doit être fournie pour le scope Traitement, PDS General, Fluide.",
+        "sites_affected": [
+          "BP866"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "40216_Si 2 indexes pour la même date alors l'un doit être de type Réel et l'autre de type Forcé.": {
+        "scope": "Valorisation - Index",
+        "error_id": "40216",
+        "message": "Si 2 indexes pour la même date alors l'un doit être de type Réel et l'autre de type Forcé.",
+        "sites_affected": [
+          "BP866"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "21818_La VI ne peut être déclarée que si une prestation de VI existe.": {
+        "scope": "Patrimoine - Maintenance Dépose/Pose CET",
+        "error_id": "21818",
+        "message": "La VI ne peut être déclarée que si une prestation de VI existe.",
+        "sites_affected": [
+          "BP882"
+        ],
+        "total_occurrences": 7,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "21222_Les champs de la pose doivent être tous vides ou tous renseignés.": {
+        "scope": "Patrimoine - PDS CET",
+        "error_id": "21222",
+        "message": "Les champs de la pose doivent être tous vides ou tous renseignés.",
+        "sites_affected": [
+          "BP900",
+          "BQ433",
+          "BQ545"
+        ],
+        "total_occurrences": 38,
+        "criticite": "Error",
+        "num_sites": 3
+      },
+      "10602_Le modele d'appareil préconisé doit être renseigné.": {
+        "scope": "Contrat - CET",
+        "error_id": "10602",
+        "message": "Le modele d'appareil préconisé doit être renseigné.",
+        "sites_affected": [
+          "BQ313"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "10633_En présence d'une prestation de relève il doit exister au moins un device actif.": {
+        "scope": "Contrat - CET",
+        "error_id": "10633",
+        "message": "En présence d'une prestation de relève il doit exister au moins un device actif.",
+        "sites_affected": [
+          "BQ313"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "30210_La date de fin doit être égale à la date de fin de la dernière PCC.": {
+        "scope": "Exploitation - Période répartition",
+        "error_id": "30210",
+        "message": "La date de fin doit être égale à la date de fin de la dernière PCC.",
+        "sites_affected": [
+          "BQ398"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "20805_Le local n'existe pas.": {
+        "scope": "Patrimoine - PDS RFC",
+        "error_id": "20805",
+        "message": "Le local n'existe pas.",
+        "sites_affected": [
+          "BR122"
+        ],
+        "total_occurrences": 13,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "20807_La pièce n'existe pas.": {
+        "scope": "Patrimoine - PDS RFC",
+        "error_id": "20807",
+        "message": "La pièce n'existe pas.",
+        "sites_affected": [
+          "BR122"
+        ],
+        "total_occurrences": 13,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "40405_Le Local n'existe pas.": {
+        "scope": "Valorisation - Consommation Local",
+        "error_id": "40405",
+        "message": "Le Local n'existe pas.",
+        "sites_affected": [
+          "BR122"
+        ],
+        "total_occurrences": 18,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "21204_Le local n'existe pas.": {
+        "scope": "Patrimoine - PDS CET",
+        "error_id": "21204",
+        "message": "Le local n'existe pas.",
+        "sites_affected": [
+          "BR436"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "40218_Un index d'occupation ne peut pas être négatif.": {
+        "scope": "Valorisation - Index",
+        "error_id": "40218",
+        "message": "Un index d'occupation ne peut pas être négatif.",
+        "sites_affected": [
+          "BZ851"
+        ],
+        "total_occurrences": 2,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "20516_Le code postal doit être sur 5 caractères et composé uniquement de chiffres.": {
+        "scope": "Patrimoine - Site Construit",
+        "error_id": "20516",
+        "message": "Le code postal doit être sur 5 caractères et composé uniquement de chiffres.",
+        "sites_affected": [
+          "CB507",
+          "CR458"
+        ],
+        "total_occurrences": 90,
+        "criticite": "Error",
+        "num_sites": 2
+      },
+      "22906_Le PDS RFC possède une Pose, non initiale, qui n'est pas précédée par une Dépose.": {
+        "scope": "Patrimoine - PDS Evènements (Codes Obs)",
+        "error_id": "22906",
+        "message": "Le PDS RFC possède une Pose, non initiale, qui n'est pas précédée par une Dépose.",
+        "sites_affected": [
+          "CD895",
+          "CJ398",
+          "CO012"
+        ],
+        "total_occurrences": 3,
+        "criticite": "Error",
+        "num_sites": 3
+      },
+      "10217_Le nom du client contractuel doit être renseigné.": {
+        "scope": "Contrat - Infos générales",
+        "error_id": "10217",
+        "message": "Le nom du client contractuel doit être renseigné.",
+        "sites_affected": [
+          "CG470"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "23111_Non Pose incohérente située entre deux poses.": {
+        "scope": "Patrimoine - PDS Evènements (Codes Obs)",
+        "error_id": "23111",
+        "message": "Non Pose incohérente située entre deux poses.",
+        "sites_affected": [
+          "CI724"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "30005_La date de début doit être antérieure à la date de fin.": {
+        "scope": "Exploitation - Exercice Comptable",
+        "error_id": "30005",
+        "message": "La date de début doit être antérieure à la date de fin.",
+        "sites_affected": [
+          "CJ138"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "23103_La Non Pose EC a un code observation inéligible.": {
+        "scope": "Patrimoine - PDS Evènements (Codes Obs)",
+        "error_id": "23103",
+        "message": "La Non Pose EC a un code observation inéligible.",
+        "sites_affected": [
+          "CN987"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "40713_La clé de répartition des frais ECS doit être renseignée.": {
+        "scope": "Valorisation - Répartition",
+        "error_id": "40713",
+        "message": "La clé de répartition des frais ECS doit être renseignée.",
+        "sites_affected": [
+          "CO115"
+        ],
+        "total_occurrences": 5,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "40728_Il existe des lignes de frais avec les postes DeductionEcs et Chauffage sur la répartition et ces postes ne sont pas compatibles entre eux.": {
+        "scope": "Valorisation - Répartition",
+        "error_id": "40728",
+        "message": "Il existe des lignes de frais avec les postes DeductionEcs et Chauffage sur la répartition et ces postes ne sont pas compatibles entre eux.",
+        "sites_affected": [
+          "DA015"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      },
+      "20217_Le site possède trop de traitements pour être migré. Cette restriction est temporaire, le site pourra être migré prochainement.": {
+        "scope": "Validation DataWareHouse",
+        "error_id": "20217",
+        "message": "Le site possède trop de traitements pour être migré. Cette restriction est temporaire, le site pourra être migré prochainement.",
+        "sites_affected": [
+          "AZ917"
+        ],
+        "total_occurrences": 1,
+        "criticite": "Error",
+        "num_sites": 1
+      }
+    }
+  }
+}
