@@ -9,6 +9,11 @@ import pandas as pd
 import json
 from pathlib import Path
 from datetime import datetime
+import os
+
+# Debug: affiche le répertoire courant
+#st.write(f"Current directory: {os.getcwd()}")
+#st.write(f"Script location: {__file__}")
 
 # Page config
 st.set_page_config(
@@ -52,39 +57,56 @@ st.markdown("""
 # Load data
 @st.cache_data
 def load_csv_data():
-    """Load processed CSV data"""
+    """Load processed CSV data with robust path handling"""
+    # Get the directory where this script is located
+    script_dir = Path(__file__).parent.resolve()
+
     # Try multiple paths to handle different execution contexts
     possible_paths = [
-        Path("data/processed/errors_2024-W33.csv"),
-        Path(__file__).parent / "data/processed/errors_2024-W33.csv",
-        Path.cwd() / "migration-error-aggregation/data/processed/errors_2024-W33.csv",
+        script_dir / "data/processed/errors_2024-W33.csv",  # Streamlit Cloud
+        Path("data/processed/errors_2024-W33.csv"),  # Local from repo root
+        Path.cwd() / "migration-error-aggregation/data/processed/errors_2024-W33.csv",  # Local from root
     ]
 
     for csv_path in possible_paths:
-        if csv_path.exists():
-            st.info(f"✅ Données chargées depuis: {csv_path}")
-            return pd.read_csv(csv_path)
+        try:
+            if csv_path.exists():
+                df = pd.read_csv(csv_path)
+                return df
+        except Exception as e:
+            continue
 
-    # If no file found, show error with paths tried
+    # If no file found, show error with debug info
     st.error("❌ Données non trouvées!")
-    st.write("Chemins testés:")
+    st.write("**Chemins testés:**")
     for p in possible_paths:
-        st.write(f"  - {p}")
+        exists = "✓" if p.exists() else "✗"
+        st.write(f"  {exists} {p}")
+
+    st.write("**Info debug:**")
+    st.write(f"Script dir: {script_dir}")
+    st.write(f"CWD: {Path.cwd()}")
     return None
 
 @st.cache_data
 def load_history_data():
     """Load historical JSON data"""
+    script_dir = Path(__file__).parent.resolve()
+
     possible_paths = [
-        Path("data/history/error_history.json"),
-        Path(__file__).parent / "data/history/error_history.json",
+        script_dir / "data/history/error_history.json",  # Streamlit Cloud
+        Path("data/history/error_history.json"),  # Local
         Path.cwd() / "migration-error-aggregation/data/history/error_history.json",
     ]
 
     for json_path in possible_paths:
-        if json_path.exists():
-            with open(json_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
+        try:
+            if json_path.exists():
+                with open(json_path, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+        except Exception as e:
+            continue
+
     return {}
 
 # Load data
