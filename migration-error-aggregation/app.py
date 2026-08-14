@@ -54,10 +54,23 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Demo data as fallback
+DEMO_CSV_DATA = """Week,ErrorType,Scope,ErrorID,Message,AffectedSites,NumSites,TotalOccurrences
+2024-W33,21104_Le local n'existe pas.,Patrimoine - PDS Eau Froide,21104,Le local n'existe pas.,AF796;AI362;AI400;AI428;AI888;AJ235;BI431;BJ407;BK219;BK970;BL652;BR436;CA654;CB680;CD914;CE663;CJ395;CK193;CK194;CL841;CM005;CR387,22,92
+2024-W33,40810_Le montant doit être renseigné.,Valorisation - Répartition Ligne Frais,40810,Le montant doit être renseigné.,BL123;BP627;BP629;BP640;BP641;BP642;BP792;BP795;BQ301;BQ302;BQ547;BR436;BZ871;CC515;CD312;CE338;CG015;CG800;CH068;CH497;CI916;CJ138;CJ395;CJ433;CJ717;CO527;CP678,27,46
+2024-W33,30115_Seuls les fluides eau froide eau chaude et CET peuvent faire partie d'une même PCC.,Exploitation - Période consommation,30115,Seuls les fluides eau froide eau chaude et CET peuvent faire partie d'une même PCC.,AF872;BF886;BI043;BL754;BN136;BO289;BP218;BP583;BP933;CB808;CC515;CD101;CE338;CF070;CF113;CF229;CG745;CG797;CI595;CI722;CI996;CJ057;CL135;CO721;CQ837;CV600;CZ671,27,29
+2024-W33,21303_Le compteur n'existe pas.,Patrimoine - PDS Accessoire,21303,Le compteur n'existe pas.,AL246;BI692;BJ296;BK256;BM096;BN136;BN370;BO913;BP038;BP267;BV917;CA008;CB454;CG346;CG401;CH817;CI163;CI957;CI996;CJ370;CL869;CQ151;CZ842,23,24
+2024-W33,40722_Le type de Gestion de Mutation ECS et Eau Chaude doivent être identiques.,Valorisation - Répartition,40722,Le type de Gestion de Mutation ECS et Eau Chaude doivent être identiques.,AF796;BQ302;CK372;CM372;CT454;CT668;CT792;CW250;DB676,9,23
+2024-W33,21405_Le pds n'existe pas.,Patrimoine - Echec Maintenance,21405,Le pds n'existe pas.,BK259;BK294;BK357;BM061;BM070;BM093;BM497;BM591;BO289;BO959;BQ323;BQ404,12,12
+2024-W33,21129_Le modèle de l'appareil renseigné est pour le fluide EC qui ne correspond pas au fluide du PDS (EF).,Patrimoine - PDS Eau Froide,21129,Le modèle de l'appareil renseigné est pour le fluide EC qui ne correspond pas au fluide du PDS (EF).,AF872;BE228;BN371;BN455;BP477;BP523;BQ599;CB062,8,10
+2024-W33,40017_Le traitement correspondant à la période de consommation est manquant.,Exploitation - Période consommation,40017,Le traitement correspondant à la période de consommation est manquant.,BL754;CC515;CF070;CG745;CO721;CS021;CS494,7,7
+2024-W33,40019_Les périodes de chauffe ne doivent pas se chevaucher ou être contigüe.,Valorisation - Traitement,40019,Les périodes de chauffe ne doivent pas se chevaucher ou être contigüe.,BO988;BP528;BP550;CO047;CT987;DA015;DB676,7,12
+2024-W33,20902_Impossible de réaliser une pose sur un pds sans radiateur déclaré.,Patrimoine - Pose RFC,20902,Impossible de réaliser une pose sur un pds sans radiateur déclaré.,AH687;BH120;BK207;BM161;BN189;BO848;BP182,7,9"""
+
 # Load data
 @st.cache_data
 def load_csv_data():
-    """Load processed CSV data with robust path handling"""
+    """Load processed CSV data with robust path handling and fallback"""
     # Get the directory where this script is located
     script_dir = Path(__file__).parent.resolve()
 
@@ -76,21 +89,19 @@ def load_csv_data():
         except Exception as e:
             continue
 
-    # If no file found, show error with debug info
-    st.error("❌ Données non trouvées!")
-    st.write("**Chemins testés:**")
-    for p in possible_paths:
-        exists = "✓" if p.exists() else "✗"
-        st.write(f"  {exists} {p}")
-
-    st.write("**Info debug:**")
-    st.write(f"Script dir: {script_dir}")
-    st.write(f"CWD: {Path.cwd()}")
-    return None
+    # Fallback: use embedded demo data
+    try:
+        from io import StringIO
+        df = pd.read_csv(StringIO(DEMO_CSV_DATA))
+        st.warning("⚠️ Utilisation des données de démo. Lancer le script pour les données réelles.")
+        return df
+    except:
+        st.error("❌ Données non trouvées et fallback échoué!")
+        return None
 
 @st.cache_data
 def load_history_data():
-    """Load historical JSON data"""
+    """Load historical JSON data with fallback"""
     script_dir = Path(__file__).parent.resolve()
 
     possible_paths = [
@@ -107,6 +118,7 @@ def load_history_data():
         except Exception as e:
             continue
 
+    # Fallback: return empty dict (will show placeholder in UI)
     return {}
 
 # Load data
