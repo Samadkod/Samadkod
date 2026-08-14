@@ -53,18 +53,38 @@ st.markdown("""
 @st.cache_data
 def load_csv_data():
     """Load processed CSV data"""
-    csv_path = Path("data/processed/errors_2024-W33.csv")
-    if csv_path.exists():
-        return pd.read_csv(csv_path)
+    # Try multiple paths to handle different execution contexts
+    possible_paths = [
+        Path("data/processed/errors_2024-W33.csv"),
+        Path(__file__).parent / "data/processed/errors_2024-W33.csv",
+        Path.cwd() / "migration-error-aggregation/data/processed/errors_2024-W33.csv",
+    ]
+
+    for csv_path in possible_paths:
+        if csv_path.exists():
+            st.info(f"✅ Données chargées depuis: {csv_path}")
+            return pd.read_csv(csv_path)
+
+    # If no file found, show error with paths tried
+    st.error("❌ Données non trouvées!")
+    st.write("Chemins testés:")
+    for p in possible_paths:
+        st.write(f"  - {p}")
     return None
 
 @st.cache_data
 def load_history_data():
     """Load historical JSON data"""
-    json_path = Path("data/history/error_history.json")
-    if json_path.exists():
-        with open(json_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
+    possible_paths = [
+        Path("data/history/error_history.json"),
+        Path(__file__).parent / "data/history/error_history.json",
+        Path.cwd() / "migration-error-aggregation/data/history/error_history.json",
+    ]
+
+    for json_path in possible_paths:
+        if json_path.exists():
+            with open(json_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
     return {}
 
 # Load data
