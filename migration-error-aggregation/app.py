@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
-Migration Error Aggregation Dashboard - Beautiful v2.0
-Focused on 3 key columns: Code Site | Message | Occurrences
-Only blocking errors (Criticite="Error")
-Auto-updates daily
+Migration Error Aggregation Dashboard - Beautiful v3.0
+Grouped by Error Message with Site Details
+OCEA Design - Professional Production Ready
 """
 
 import streamlit as st
@@ -11,7 +10,6 @@ import pandas as pd
 from io import StringIO
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
-import plotly.express as px
 
 # ============================================================================
 # PAGE CONFIGURATION
@@ -25,7 +23,7 @@ st.set_page_config(
 )
 
 # ============================================================================
-# CUSTOM STYLING - ELEGANT & PROFESSIONAL
+# CUSTOM STYLING - OCEA DESIGN
 # ============================================================================
 
 st.markdown("""
@@ -33,87 +31,128 @@ st.markdown("""
     :root {
         --ocea-blue: #2E75B6;
         --ocea-dark: #1F4E78;
+        --ocea-green: #6DB82D;
         --accent-orange: #FF9500;
         --success-green: #27AE60;
         --warning-red: #E74C3C;
         --neutral-gray: #7F8C8D;
         --surface-light: #F8F9FA;
-        --surface-dark: #ECF0F1;
-    }
-
-    h1, h2, h3 {
-        color: var(--ocea-dark);
-        font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
-        font-weight: 600;
-        letter-spacing: -0.5px;
+        --surface-gray: #E8EAED;
     }
 
     h1 {
+        color: var(--ocea-dark);
         border-bottom: 3px solid var(--ocea-blue);
         padding-bottom: 15px;
-        font-size: 2.2em;
+        font-size: 2em;
+    }
+
+    h2, h3 {
+        color: var(--ocea-dark);
+        font-weight: 600;
     }
 
     .kpi-card {
         background: linear-gradient(135deg, #F0F7FF 0%, #FFFFFF 100%);
         border-left: 4px solid var(--ocea-blue);
         padding: 20px;
-        border-radius: 8px;
+        border-radius: 6px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
     .kpi-value {
-        font-size: 2em;
+        font-size: 2.5em;
         font-weight: 700;
         color: var(--ocea-blue);
         font-family: 'Courier New', monospace;
     }
 
     .kpi-label {
-        font-size: 0.9em;
+        font-size: 0.85em;
         color: var(--neutral-gray);
         font-weight: 500;
-        margin-top: 5px;
+        margin-top: 8px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+    }
+
+    .message-row {
+        padding: 12px;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .message-row:hover {
+        background-color: #E8F4F8;
+    }
+
+    .message-row-odd {
+        background-color: #FFFFFF;
+    }
+
+    .message-row-even {
+        background-color: #F5F5F5;
+    }
+
+    .message-text {
+        font-size: 0.95em;
+        color: var(--ocea-dark);
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    .sites-count {
+        font-size: 1.1em;
+        font-weight: 600;
+        color: var(--ocea-blue);
+        background-color: #E8F4F8;
+        padding: 6px 12px;
+        border-radius: 20px;
+        display: inline-block;
     }
 
     .site-code {
         font-family: 'Courier New', monospace;
         font-weight: 700;
-        color: white;
+        color: #FFFFFF;
         background-color: var(--ocea-blue);
-        padding: 6px 12px;
-        border-radius: 4px;
+        padding: 4px 10px;
+        border-radius: 3px;
         display: inline-block;
-        min-width: 70px;
+        min-width: 60px;
         text-align: center;
+        margin-right: 8px;
     }
 
     .occurrence-badge {
         background-color: var(--accent-orange);
         color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
+        padding: 4px 10px;
+        border-radius: 12px;
         font-weight: 700;
-        font-size: 1.1em;
+        font-size: 0.9em;
         display: inline-block;
         font-family: 'Courier New', monospace;
-        box-shadow: 0 2px 8px rgba(255, 149, 0, 0.3);
     }
 
-    .error-message {
-        font-size: 0.95em;
-        color: #2C3E50;
-        line-height: 1.6;
+    .detail-row {
+        padding: 8px 0;
+        border-bottom: 1px solid #EEEEEE;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
-    .chart-container {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        margin: 15px 0;
+    .detail-row:last-child {
+        border-bottom: none;
+    }
+
+    .section-divider {
+        height: 2px;
+        background: linear-gradient(90deg, var(--ocea-blue) 0%, var(--ocea-green) 100%);
+        margin: 20px 0;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -130,7 +169,6 @@ DEMO_DATA = """Week,Scope,ErrorID,Message,SiteCode,Occurrences,Criticite,LastSee
 2024-W33,Valorisation - Répartition Ligne Frais,40810,Le montant doit être renseigné.,BP627,4,Error,2024-08-13
 2024-W33,Valorisation - Répartition Ligne Frais,40810,Le montant doit être renseigné.,BP629,1,Error,2024-08-13
 2024-W33,Valorisation - Répartition Ligne Frais,40810,Le montant doit être renseigné.,BP640,2,Error,2024-08-13
-2024-W33,Valorisation - Répartition Ligne Frais,40810,Le montant doit être renseigné.,BP641,3,Information,2024-08-13
 2024-W33,Patrimoine - PDS Accessoire,21303,Le compteur n'existe pas.,AL246,2,Error,2024-08-12
 2024-W33,Patrimoine - PDS Accessoire,21303,Le compteur n'existe pas.,BI692,3,Error,2024-08-12
 2024-W33,Patrimoine - PDS Accessoire,21303,Le compteur n'existe pas.,BJ296,1,Error,2024-08-12
@@ -158,39 +196,43 @@ DEMO_DATA = """Week,Scope,ErrorID,Message,SiteCode,Occurrences,Criticite,LastSee
 2024-W33,Contrat - Eau Froide,10724,Les périodes de consommation ne sont pas renseignées.,BN136,3,Error,2024-08-06"""
 
 # ============================================================================
-# DATA LOADING - WITH CRITICITE FILTER
+# DATA LOADING WITH CRITICITE FILTER
 # ============================================================================
 
-@st.cache_data(ttl=60)  # Auto-refresh every 60 seconds
+@st.cache_data(ttl=60)
 def load_data():
-    """Load demo data and filter for blocking errors only (Criticite='Error')"""
+    """Load demo data and filter for blocking errors only"""
     df = pd.read_csv(StringIO(DEMO_DATA))
     # FILTER ONLY BLOCKING ERRORS
     df = df[df['Criticite'] == 'Error'].copy()
-    # Sort by Occurrences descending
-    df = df.sort_values('Occurrences', ascending=False).reset_index(drop=True)
     return df
 
+@st.cache_data(ttl=60)
+def aggregate_by_message(df):
+    """Group data by message and aggregate sites"""
+    agg_data = []
+    for message in df['Message'].unique():
+        msg_df = df[df['Message'] == message]
+        num_sites = msg_df['SiteCode'].nunique()
+        total_occ = msg_df['Occurrences'].sum()
+        
+        sites_detail = []
+        for site in msg_df['SiteCode'].unique():
+            site_occ = msg_df[msg_df['SiteCode'] == site]['Occurrences'].sum()
+            sites_detail.append({'code': site, 'occurrences': int(site_occ)})
+        
+        agg_data.append({
+            'message': message,
+            'num_sites': num_sites,
+            'total_occ': total_occ,
+            'sites': sorted(sites_detail, key=lambda x: x['occurrences'], reverse=True)
+        })
+    
+    # Sort by number of sites descending
+    return sorted(agg_data, key=lambda x: x['num_sites'], reverse=True)
+
 df = load_data()
-
-# ============================================================================
-# HELPER FUNCTIONS
-# ============================================================================
-
-def get_summary_stats(data):
-    """Calculate key metrics - only blocking errors"""
-    unique_sites = data['SiteCode'].nunique()
-    unique_errors = data['Message'].nunique()
-    total_occurrences = data['Occurrences'].sum()
-    return unique_sites, unique_errors, total_occurrences
-
-def get_top_sites(data, n=10):
-    """Get top N sites by total occurrences"""
-    return data.groupby('SiteCode')['Occurrences'].sum().nlargest(n).sort_values(ascending=True)
-
-def get_top_errors(data, n=10):
-    """Get top N error messages by total occurrences"""
-    return data.groupby('Message')['Occurrences'].sum().nlargest(n).sort_values(ascending=True)
+agg_messages = aggregate_by_message(df)
 
 # ============================================================================
 # HEADER
@@ -199,25 +241,28 @@ def get_top_errors(data, n=10):
 col_title, col_time = st.columns([5, 1])
 with col_title:
     st.markdown("# 🔍 Suivi des Erreurs Migration")
-    st.markdown("**OCEA Smart Building** — Erreurs bloquantes | Mise à jour temps réel")
+    st.markdown("**OCEA Smart Building** — Erreurs bloquantes | Production")
 
 with col_time:
-    st.markdown(f"<p style='text-align: right; color: #7F8C8D; font-size: 0.9em;'><strong>Maj:</strong> {datetime.now().strftime('%H:%M:%S')}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='text-align: right; color: #7F8C8D; font-size: 0.85em;'><strong>Maj:</strong> {datetime.now().strftime('%d/%m %H:%M')}</p>", unsafe_allow_html=True)
 
 st.markdown("---")
 
 # ============================================================================
-# KPI METRICS - ONLY BLOCKING ERRORS
+# KPI METRICS
 # ============================================================================
 
-unique_sites, unique_errors, total_occ = get_summary_stats(df)
+total_sites = df['SiteCode'].nunique()
+total_messages = df['Message'].nunique()
+total_occ = df['Occurrences'].sum()
+top_message = max(agg_messages, key=lambda x: x['total_occ'])
 
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.markdown(f"""
     <div class="kpi-card">
-        <div class="kpi-value">{unique_sites}</div>
+        <div class="kpi-value">{total_sites}</div>
         <div class="kpi-label">Sites Affectés</div>
     </div>
     """, unsafe_allow_html=True)
@@ -225,8 +270,8 @@ with col1:
 with col2:
     st.markdown(f"""
     <div class="kpi-card">
-        <div class="kpi-value">{unique_errors}</div>
-        <div class="kpi-label">Erreurs Bloquantes</div>
+        <div class="kpi-value">{total_messages}</div>
+        <div class="kpi-label">Types d'Erreurs</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -239,12 +284,10 @@ with col3:
     """, unsafe_allow_html=True)
 
 with col4:
-    top_site = df.groupby('SiteCode')['Occurrences'].sum().idxmax()
-    top_site_occ = df.groupby('SiteCode')['Occurrences'].sum().max()
     st.markdown(f"""
     <div class="kpi-card">
-        <div class="kpi-value" style="font-size: 1.6em;">{int(top_site_occ)}</div>
-        <div class="kpi-label">Site Critique: {top_site}</div>
+        <div class="kpi-value" style="font-size: 1.8em;">{top_message['num_sites']}</div>
+        <div class="kpi-label">Erreur Majeure</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -256,90 +299,96 @@ st.markdown("---")
 
 st.sidebar.header("🎯 Filtres & Options")
 
-# Filter by scope
-scopes = sorted(df['Scope'].unique())
-selected_scopes = st.sidebar.multiselect(
-    "Domaine/Scope",
-    options=scopes,
-    default=scopes
-)
+search_message = st.sidebar.text_input("🔍 Chercher message", placeholder="ex: local n'existe pas")
 
-# Filter by site code
-site_search = st.sidebar.text_input("🔍 Chercher Code Site", placeholder="ex: BL123")
+min_sites_filter = st.sidebar.slider("Min. sites affectés", 1, total_sites, 1)
 
-# Minimum occurrences
-min_occ = st.sidebar.slider("Min. occurrences", 1, int(df['Occurrences'].max()), 1)
-
-# Sort option
 sort_by = st.sidebar.radio(
     "Trier par",
-    options=["Occurrences (DESC)", "Code Site (A-Z)"],
+    options=["Sites affectés (DESC)", "Occurrences (DESC)"],
     index=0
 )
 
 # Apply filters
-df_filtered = df[df['Scope'].isin(selected_scopes)].copy()
-if site_search:
-    df_filtered = df_filtered[df_filtered['SiteCode'].str.contains(site_search.upper(), case=False)]
-df_filtered = df_filtered[df_filtered['Occurrences'] >= min_occ]
+filtered_messages = agg_messages
+if search_message:
+    filtered_messages = [m for m in filtered_messages if search_message.lower() in m['message'].lower()]
+if min_sites_filter > 1:
+    filtered_messages = [m for m in filtered_messages if m['num_sites'] >= min_sites_filter]
 
 if sort_by == "Occurrences (DESC)":
-    df_filtered = df_filtered.sort_values('Occurrences', ascending=False)
-else:
-    df_filtered = df_filtered.sort_values('SiteCode', ascending=True)
-
-df_filtered = df_filtered.reset_index(drop=True)
+    filtered_messages = sorted(filtered_messages, key=lambda x: x['total_occ'], reverse=True)
 
 st.sidebar.markdown("---")
-st.sidebar.info(f"✅ **{len(df_filtered)}** erreurs affichées / **{len(df)}** total (bloquantes)")
+st.sidebar.info(f"✅ **{len(filtered_messages)}** messages affichés / **{len(agg_messages)}** total")
 st.sidebar.success("🔄 Auto-refresh: ON (chaque minute)")
 
 # ============================================================================
 # MAIN TABS
 # ============================================================================
 
-tab1, tab2, tab3, tab4 = st.tabs(["📊 Tableau", "📈 Analyses", "🗺️ Heatmap", "📋 Historique"])
+tab1, tab2 = st.tabs(["📊 Messages d'Erreurs", "📈 Analyse & Graphiques"])
 
 # ============================================================================
-# TAB 1: MAIN DATA TABLE - 3 KEY COLUMNS ONLY
+# TAB 1: MESSAGES GROUPED TABLE
 # ============================================================================
 
 with tab1:
-    st.subheader("📊 Tableau Principal — Code Site | Message | Occurrences")
-    st.markdown(f"**{len(df_filtered)}** erreurs bloquantes affichées • Focalisé sur les 3 colonnes clés")
-    st.markdown("---")
+    st.subheader(f"📋 Erreurs Bloquantes Regroupées — {len(filtered_messages)} messages")
+    st.markdown("Cliquez sur une erreur pour voir les sites affectés avec occurrences")
+    
+    st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
 
-    # Display header row
-    col_site, col_msg, col_occ = st.columns([1.2, 5, 1.2], gap="large")
-    with col_site:
-        st.markdown("**Code Site**")
-    with col_msg:
-        st.markdown("**Message d'Erreur**")
-    with col_occ:
-        st.markdown("**Occurrences**")
+    # Display messages
+    for idx, msg_item in enumerate(filtered_messages):
+        is_even = idx % 2 == 0
+        row_class = "message-row-even" if is_even else "message-row-odd"
 
-    st.markdown("<hr style='margin: 10px 0;'>", unsafe_allow_html=True)
+        with st.container():
+            col1, col2 = st.columns([5, 1])
 
-    # Display rows
-    for idx, row in df_filtered.iterrows():
-        col_site, col_msg, col_occ = st.columns([1.2, 5, 1.2], gap="large")
+            with col1:
+                st.markdown(f"""
+                <div class="message-row {row_class}">
+                    <div class="message-text">{msg_item['message']}</div>
+                </div>
+                """, unsafe_allow_html=True)
 
-        with col_site:
-            st.markdown(f'<span class="site-code">{row["SiteCode"]}</span>', unsafe_allow_html=True)
+            with col2:
+                st.markdown(f"""
+                <div class="sites-count">{msg_item['num_sites']} sites ▼</div>
+                """, unsafe_allow_html=True)
 
-        with col_msg:
-            st.markdown(f'<span class="error-message">{row["Message"]}</span>', unsafe_allow_html=True)
+            # Expandable details
+            with st.expander(f"👥 Détail des {msg_item['num_sites']} sites"):
+                st.markdown(f"**Message:** {msg_item['message']}")
+                st.markdown(f"**Sites affectés:** {msg_item['num_sites']} | **Total occurrences:** {msg_item['total_occ']}")
+                st.markdown("---")
 
-        with col_occ:
-            st.markdown(f'<span class="occurrence-badge">{int(row["Occurrences"])}</span>', unsafe_allow_html=True)
-
-        st.markdown("<hr style='margin: 8px 0; opacity: 0.3;'>", unsafe_allow_html=True)
+                # Display sites in detail
+                for site_detail in msg_item['sites']:
+                    col_site, col_occ = st.columns([2, 1])
+                    with col_site:
+                        st.markdown(f'<span class="site-code">{site_detail["code"]}</span>', unsafe_allow_html=True)
+                    with col_occ:
+                        st.markdown(f'<span class="occurrence-badge">({site_detail["occurrences"]})</span>', unsafe_allow_html=True)
 
     # Export section
     st.markdown("---")
     st.subheader("📥 Exporter les Données")
 
-    csv_data = df_filtered[['SiteCode', 'Message', 'Occurrences', 'ErrorID', 'Scope', 'LastSeen']].to_csv(index=False)
+    # Create export dataframe
+    export_rows = []
+    for msg_item in filtered_messages:
+        for site in msg_item['sites']:
+            export_rows.append({
+                'Message': msg_item['message'],
+                'Code Site': site['code'],
+                'Occurrences': site['occurrences']
+            })
+
+    export_df = pd.DataFrame(export_rows)
+    csv_data = export_df.to_csv(index=False)
 
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -351,39 +400,93 @@ with tab1:
         )
 
     with col2:
-        st.info("✅ Format: Code Site | Message | Occurrences | ErrorID | Scope | LastSeen")
+        st.info("✅ Format: Message | Code Site | Occurrences")
 
     with col3:
-        st.success(f"🔄 Auto-refresh toutes les minutes")
+        st.success("🔄 Mise à jour: Chaque minute")
 
 # ============================================================================
-# TAB 2: PROFESSIONAL ANALYSIS CHARTS
+# TAB 2: ANALYSIS & CHARTS
 # ============================================================================
 
 with tab2:
-    st.subheader("📈 Analyses Professionnelles")
+    st.subheader("📈 Analyses & Graphiques")
 
     col1, col2 = st.columns(2)
 
-    # Top sites by occurrences
+    # Top messages chart
     with col1:
-        st.markdown("**Top 10 Sites — Total Occurrences**")
-        if len(df_filtered) > 0:
-            top_sites_data = get_top_sites(df_filtered, n=10)
+        st.markdown("**Top Messages par Nombre de Sites**")
+        
+        chart_data = []
+        for msg in filtered_messages[:10]:
+            chart_data.append({
+                'message': msg['message'][:40] + "..." if len(msg['message']) > 40 else msg['message'],
+                'sites': msg['num_sites'],
+                'occ': msg['total_occ']
+            })
+
+        if chart_data:
+            chart_df = pd.DataFrame(chart_data).sort_values('sites', ascending=True)
+            
+            fig = go.Figure(data=[
+                go.Bar(
+                    y=chart_df['message'],
+                    x=chart_df['sites'],
+                    orientation='h',
+                    marker=dict(
+                        color=chart_df['sites'],
+                        colorscale='Blues',
+                        showscale=True,
+                        colorbar=dict(title="Sites")
+                    ),
+                    text=chart_df['sites'],
+                    textposition='auto',
+                    hovertemplate='<b>%{y}</b><br>Sites: %{x}<br><extra></extra>'
+                )
+            ])
+
+            fig.update_layout(
+                height=400,
+                margin=dict(l=0, r=0, t=0, b=0),
+                paper_bgcolor='white',
+                plot_bgcolor='#F8F9FA',
+                xaxis=dict(showgrid=True, gridwidth=1, gridcolor='#E0E0E0'),
+                yaxis=dict(showgrid=False),
+                font=dict(family='Segoe UI', size=10, color='#1F4E78')
+            )
+
+            st.plotly_chart(fig, use_container_width=True)
+
+    # Top messages by occurrences
+    with col2:
+        st.markdown("**Top Messages par Occurrences**")
+
+        chart_data = []
+        for msg in filtered_messages[:10]:
+            chart_data.append({
+                'message': msg['message'][:40] + "..." if len(msg['message']) > 40 else msg['message'],
+                'sites': msg['num_sites'],
+                'occ': msg['total_occ']
+            })
+
+        if chart_data:
+            chart_df = pd.DataFrame(chart_data).sort_values('occ', ascending=True)
 
             fig = go.Figure(data=[
                 go.Bar(
-                    y=top_sites_data.index,
-                    x=top_sites_data.values,
+                    y=chart_df['message'],
+                    x=chart_df['occ'],
                     orientation='h',
                     marker=dict(
-                        color=top_sites_data.values,
+                        color=chart_df['occ'],
                         colorscale='Oranges',
                         showscale=True,
                         colorbar=dict(title="Occ.")
                     ),
-                    text=top_sites_data.values,
+                    text=chart_df['occ'],
                     textposition='auto',
+                    hovertemplate='<b>%{y}</b><br>Occurrences: %{x}<br><extra></extra>'
                 )
             ])
 
@@ -394,195 +497,33 @@ with tab2:
                 plot_bgcolor='#F8F9FA',
                 xaxis=dict(showgrid=True, gridwidth=1, gridcolor='#E0E0E0'),
                 yaxis=dict(showgrid=False),
-                font=dict(family='Segoe UI', size=11, color='#1F4E78')
-            )
-
-            st.plotly_chart(fig, use_container_width=True)
-
-    # Top errors by occurrences
-    with col2:
-        st.markdown("**Top 10 Messages — Total Occurrences**")
-        if len(df_filtered) > 0:
-            top_errors_data = get_top_errors(df_filtered, n=10)
-
-            fig = go.Figure(data=[
-                go.Bar(
-                    y=top_errors_data.index,
-                    x=top_errors_data.values,
-                    orientation='h',
-                    marker=dict(
-                        color=top_errors_data.values,
-                        colorscale='Reds',
-                        showscale=True,
-                        colorbar=dict(title="Occ.")
-                    ),
-                    text=top_errors_data.values,
-                    textposition='auto',
-                )
-            ])
-
-            fig.update_layout(
-                height=400,
-                margin=dict(l=0, r=0, t=0, b=0),
-                paper_bgcolor='white',
-                plot_bgcolor='#F8F9FA',
-                xaxis=dict(showgrid=True, gridwidth=1, gridcolor='#E0E0E0'),
-                yaxis=dict(showgrid=False),
-                font=dict(family='Segoe UI', size=11, color='#1F4E78')
+                font=dict(family='Segoe UI', size=10, color='#1F4E78')
             )
 
             st.plotly_chart(fig, use_container_width=True)
 
     st.markdown("---")
 
-    # Stats by scope
-    st.markdown("**Erreurs par Domaine**")
-    if len(df_filtered) > 0:
-        scope_stats = df_filtered.groupby('Scope').agg({
-            'SiteCode': 'nunique',
-            'Occurrences': 'sum',
-            'Message': 'nunique'
-        }).rename(columns={
-            'SiteCode': 'Sites Uniques',
-            'Occurrences': 'Total Occ.',
-            'Message': 'Types Erreurs'
-        }).sort_values('Total Occ.', ascending=False)
+    # Summary statistics
+    st.markdown("**Statistiques Résumées**")
 
-        st.dataframe(scope_stats, use_container_width=True)
+    col1, col2, col3, col4 = st.columns(4)
 
-# ============================================================================
-# TAB 3: HEATMAP SITES × ERRORS
-# ============================================================================
-
-with tab3:
-    st.subheader("🗺️ Heatmap — Sites × Erreurs")
-    st.markdown("Visualisez les concentrations d'erreurs bloquantes")
-
-    if len(df_filtered) > 1:
-        # Créer une matrice pivot
-        heatmap_data = df_filtered.pivot_table(
-            index='SiteCode',
-            columns='Message',
-            values='Occurrences',
-            aggfunc='sum',
-            fill_value=0
-        )
-
-        # Limiter aux top sites et erreurs
-        top_sites_list = df_filtered.groupby('SiteCode')['Occurrences'].sum().nlargest(10).index
-        top_msgs_list = df_filtered.groupby('Message')['Occurrences'].sum().nlargest(8).index
-
-        heatmap_subset = heatmap_data.loc[top_sites_list, top_msgs_list]
-
-        fig = go.Figure(data=go.Heatmap(
-            z=heatmap_subset.values,
-            x=[msg[:35] + "..." if len(msg) > 35 else msg for msg in heatmap_subset.columns],
-            y=heatmap_subset.index,
-            colorscale='YlOrRd',
-            text=heatmap_subset.values,
-            texttemplate='%{text:.0f}',
-            textfont={"size": 10},
-            colorbar=dict(title="Occurrences")
-        ))
-
-        fig.update_layout(
-            height=600,
-            margin=dict(l=120, r=50, t=40, b=250),
-            paper_bgcolor='white',
-            font=dict(family='Segoe UI', size=10, color='#1F4E78'),
-            xaxis=dict(side='bottom', tickangle=-45),
-            yaxis=dict(autorange='reversed')
-        )
-
-        st.plotly_chart(fig, use_container_width=True)
-    else:
-        st.warning("Pas assez de données pour afficher la heatmap")
-
-# ============================================================================
-# TAB 4: DAILY HISTORICAL TRENDS
-# ============================================================================
-
-with tab4:
-    st.subheader("📈 Historique & Tendances Quotidiennes")
-
-    # Simulated daily historical data (based on filtered data)
-    history = pd.DataFrame({
-        'Date': pd.date_range(start=datetime.now() - timedelta(days=6), periods=7, freq='D'),
-        'Total Occurrences': [350, 380, 410, 450, 480, 520, 545],
-        'Sites Affectés': [120, 128, 135, 142, 148, 155, 165]
-    })
-
-    col1, col2 = st.columns(2)
-
-    # Occurrences trend
     with col1:
-        st.markdown("**Évolution Quotidienne — Total Occurrences**")
-        fig = go.Figure()
+        avg_sites_per_msg = total_sites / total_messages if total_messages > 0 else 0
+        st.metric("Sites par message", f"{avg_sites_per_msg:.1f}")
 
-        fig.add_trace(go.Scatter(
-            x=history['Date'],
-            y=history['Total Occurrences'],
-            mode='lines+markers',
-            name='Occurrences',
-            line=dict(color='#FF9500', width=3),
-            marker=dict(size=10, color='#FF9500', line=dict(color='white', width=2)),
-            fill='tozeroy',
-            fillcolor='rgba(255, 149, 0, 0.15)'
-        ))
-
-        fig.update_layout(
-            height=400,
-            margin=dict(l=0, r=0, t=0, b=0),
-            paper_bgcolor='white',
-            plot_bgcolor='#F8F9FA',
-            hovermode='x unified',
-            font=dict(family='Segoe UI', size=11, color='#1F4E78')
-        )
-
-        st.plotly_chart(fig, use_container_width=True)
-
-    # Sites trend
     with col2:
-        st.markdown("**Évolution Quotidienne — Sites Affectés**")
-        fig = go.Figure()
+        avg_occ_per_msg = total_occ / total_messages if total_messages > 0 else 0
+        st.metric("Occurrences par message", f"{avg_occ_per_msg:.1f}")
 
-        fig.add_trace(go.Scatter(
-            x=history['Date'],
-            y=history['Sites Affectés'],
-            mode='lines+markers',
-            name='Sites',
-            line=dict(color='#2E75B6', width=3),
-            marker=dict(size=10, color='#2E75B6', line=dict(color='white', width=2)),
-            fill='tozeroy',
-            fillcolor='rgba(46, 117, 182, 0.15)'
-        ))
+    with col3:
+        max_sites_msg = max(agg_messages, key=lambda x: x['num_sites'])
+        st.metric("Max sites (1 message)", max_sites_msg['num_sites'])
 
-        fig.update_layout(
-            height=400,
-            margin=dict(l=0, r=0, t=0, b=0),
-            paper_bgcolor='white',
-            plot_bgcolor='#F8F9FA',
-            hovermode='x unified',
-            font=dict(family='Segoe UI', size=11, color='#1F4E78')
-        )
-
-        st.plotly_chart(fig, use_container_width=True)
-
-    st.markdown("---")
-    st.markdown("**Tableau Historique (7 derniers jours)**")
-
-    # Format history table nicely
-    display_history = history.copy()
-    display_history['Date'] = display_history['Date'].dt.strftime('%d/%m/%Y')
-
-    st.dataframe(
-        display_history.style.format({
-            'Total Occurrences': '{:.0f}',
-            'Sites Affectés': '{:.0f}'
-        }),
-        use_container_width=True,
-        hide_index=True
-    )
+    with col4:
+        max_occ_msg = max(agg_messages, key=lambda x: x['total_occ'])
+        st.metric("Max occurrences (1 message)", max_occ_msg['total_occ'])
 
 # ============================================================================
 # FOOTER
@@ -590,9 +531,9 @@ with tab4:
 
 st.markdown("---")
 st.markdown("""
-<div style='text-align: center; color: #7F8C8D; font-size: 0.9em;'>
-    <p><strong>✨ Migration Error Aggregation v2.0</strong> — OCEA Smart Building © 2024-2026</p>
-    <p>🔄 <em>Mise à jour automatique chaque minute</em> • Filtrage: Erreurs bloquantes uniquement (Criticite="Error")</p>
-    <p style='font-size: 0.85em; margin-top: 10px;'>Focus: <strong>Code Site</strong> | <strong>Message</strong> | <strong>Occurrences</strong></p>
+<div style='text-align: center; color: #7F8C8D; font-size: 0.85em;'>
+    <p><strong>✨ Migration Error Aggregation v3.0</strong> — OCEA Smart Building © 2024-2026</p>
+    <p>🔄 <em>Auto-refresh toutes les minutes</em> • Erreurs bloquantes uniquement (Criticite="Error")</p>
+    <p style='font-size: 0.8em;'>Regroupé par Message | Sites affectés | Occurrences par site</p>
 </div>
 """, unsafe_allow_html=True)
