@@ -45,6 +45,51 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# ========= Custom CSS pour rendre les tabs bien visibles =========
+st.markdown("""
+<style>
+/* Rendre les tabs PLUS GRANDS et COLORÉS */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 2px;
+    background-color: #f0f2f6;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    height: 60px;
+    white-space: pre-wrap;
+    background-color: #ecf0f7;
+    border-radius: 6px;
+    padding: 12px 20px;
+    border: 2px solid #1f77b4;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.stTabs [aria-selected="true"] [data-baseweb="tab"] {
+    background-color: #1f77b4;
+    color: white;
+    border: 2px solid #0f3d7f;
+    box-shadow: 0 4px 8px rgba(31, 119, 180, 0.4);
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    background-color: #2D6CDF;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(45, 108, 223, 0.3);
+}
+
+/* Ajouter des icônes en couleur */
+.stTabs [data-baseweb="tab"] div {
+    font-size: 18px;
+    margin-right: 8px;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # --------------------------------------------------------------------------- #
 # Données (mises en cache)
 # --------------------------------------------------------------------------- #
@@ -178,14 +223,14 @@ st.divider()
 # --------------------------------------------------------------------------- #
 tab_glossaire, tab_synth, tab_s2, tab_ctrl, tab_anom, tab_dict, tab_lin, tab_audit = st.tabs(
     [
-        "📚 Comprendre l'Assurance",
-        "📊 Synthèse qualité",
-        "💰 Solvabilité 2 — Impact",
-        "✅ Contrôles",
-        "🔎 Anomalies",
-        "📖 Dictionnaire",
-        "🗺️ Cartographie & lignage",
-        "🧾 Piste d'audit",
+        "📚\nComprendre\nl'Assurance",
+        "📊\nSynthèse\nQualité",
+        "💰\nSolvabilité 2\nImpact",
+        "✅\nContrôles",
+        "🔎\nAnomalies",
+        "📖\nDictionnaire",
+        "🗺️\nCartographie\n& Lignage",
+        "🧾\nPiste\nd'Audit",
     ]
 )
 
