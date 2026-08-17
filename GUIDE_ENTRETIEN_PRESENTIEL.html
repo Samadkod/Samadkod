@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Entretien Présentiel — GROUPE CAM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: #f8f9fa;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 50px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 3px solid #1f77b4;
+            padding-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            color: #1f77b4;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #606366;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        h2 {
+            color: #1f77b4;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-left: 5px solid #1f77b4;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #2D6CDF;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .timeline {
+            background: #ecf0f7;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .timeline-item {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .time-badge {
+            background: #1f77b4;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: center;
+            margin-right: 15px;
+        }
+        .time-content {
+            flex: 1;
+        }
+        .pitch-box {
+            background: #f0f2f6;
+            border-left: 4px solid #1f77b4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+        .faq-item {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+        .faq-question {
+            color: #1f77b4;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .faq-answer {
+            color: #333;
+            margin-left: 15px;
+            padding-left: 15px;
+            border-left: 2px solid #f59e0b;
+        }
+        .checklist {
+            background: #ecfdf5;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            font-size: 1.05em;
+        }
+        .checklist-item input[type="checkbox"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .vocab-card {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .vocab-term {
+            color: #1f77b4;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .vocab-def {
+            font-size: 0.95em;
+            color: #555;
+        }
+        .tip-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .alert-box {
+            background: #fee2e2;
+            border-left: 4px solid #dc2626;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            color: #991b1b;
+        }
+        .success-box {
+            background: #dcfce7;
+            border-left: 4px solid #16a34a;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            color: #166534;
+        }
+        .demo-step {
+            background: #ecf0f7;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 4px solid #2D6CDF;
+        }
+        .numbers {
+            background: #f0f2f6;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        .number-item {
+            margin: 10px 0;
+            font-size: 1.05em;
+        }
+        .number-value {
+            color: #1f77b4;
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+        .key-phrase {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Guide Entretien Présentiel</h1>
+            <p><strong>GROUPE CAM</strong> — Charge(e) d'Études QDD Solvabilité 2</p>
+            <p style="margin-top: 15px; color: #999;">Préparation complète • Timing • Scripts • FAQ • Checklist</p>
+        </div>
+
+        <!-- ========== SECTION 1 ========== -->
+        <div class="section">
+            <h2>📅 Timing Global de l'Entretien</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time-badge">0-2 min</div>
+                    <div class="time-content">
+                        <strong>Accueil & Présentations</strong>
+                        <p>Poignée de main, sourire, rangez le téléphone.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-badge">2-7 min</div>
+                    <div class="time-content">
+                        <strong>VOTRE PITCH (5 min)</strong>
+                        <p>Qui vous êtes, pourquoi QDD, pourquoi GROUPE CAM. Voir section "Pitch".</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-badge">7-25 min</div>
+                    <div class="time-content">
+                        <strong>DÉMONSTRATION APP (15-18 min)</strong>
+                        <p>Guidée par eux. Voir section "Script démo".</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-badge">25-45 min</div>
+                    <div class="time-content">
+                        <strong>LEURS QUESTIONS (20 min)</strong>
+                        <p>Questions techniques, comportementales, S2. Voir section "FAQ".</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-badge">45-55 min</div>
+                    <div class="time-content">
+                        <strong>VOS QUESTIONS (10 min)</strong>
+                        <p>Montrez votre intérêt. Voir section "Vos questions".</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-badge">55-60 min</div>
+                    <div class="time-content">
+                        <strong>Conclusion & Prochaines Étapes</strong>
+                        <p>"Merci, à bientôt!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SECTION 2 ========== -->
+        <div class="section">
+            <h2>🎤 Votre Pitch d'Ouverture (5 min)</h2>
+
+            <div class="pitch-box">
+                "Bonjour! Merci de me recevoir. Je suis issu d'un Master en économie, avec une expérience concrète en assurance.
+                <br><br>
+                Chez OCEA, j'ai piloté un grand projet de migration de données — 11,700 sites à fiabiliser. Pendant ce temps, j'ai compris un truc simple :
+                <span class="key-phrase">un assureur, c'est comme une banque — si les données sont pourries, tout s'écroule.</span>
+                <br><br>
+                Pour Solvabilité 2, c'est pareil. Vos <span class="key-phrase">provisions techniques</span>, vos <span class="key-phrase">QRT</span>, vos rapports <span class="key-phrase">ACPR</span> — tout repose sur des données de qualité.
+                <br><br>
+                C'est ce que j'ai appris. C'est ce que je maîtrise. C'est pour ça que je vise un poste en QDD chez GROUPE CAM.
+                <br><br>
+                J'ai créé un petit prototype pour montrer comment je structurerais un dispositif QDD. Vous voulez que je vous le montre ?"
+            </div>
+
+            <h3>📍 Points clés à mémoriser:</h3>
+            <ul style="margin-left: 20px; margin-top: 15px;">
+                <li>✅ Master éco (fondations)</li>
+                <li>✅ 11,700 sites OCEA (preuve)</li>
+                <li>✅ Lien données → solvabilité (la clé)</li>
+                <li>✅ Provisions, QRT, ACPR (vocabulaire)</li>
+                <li>✅ Pourquoi GROUPE CAM (pertinence)</li>
+            </ul>
+
+            <div class="tip-box">
+                <strong>💡 Conseil:</strong> Pratiquez ce pitch à haute voix 5-10 fois avant l'entretien. Visez 5 min exactement (pas plus). Regardez-les dans les yeux, parlez lentement, souriez.
+            </div>
+        </div>
+
+        <!-- ========== SECTION 3 ========== -->
+        <div class="section">
+            <h2>📱 Script de Démonstration (15 min)</h2>
+
+            <h3>🎬 Avant de lancer l'app:</h3>
+            <div class="tip-box">
+                "Avant de montrer, je vous explique rapidement ce qu'on va voir. L'app a 7 onglets. On va en regarder 4 pour que vous compreniez la structure d'un dispositif QDD. D'accord ?"
+            </div>
+
+            <h3>Onglet 1: Synthèse Qualité (2-3 min)</h3>
+            <div class="demo-step">
+                <strong>Cliquez sur:</strong> "Synthèse qualité" (1er onglet)<br><br>
+                <strong>Dites:</strong> "Voilà le dashboard d'un exemple de jeu de données. En haut, vous voyez:<br>
+                • Le score QDD global (85% par exemple) — c'est la santé des données<br>
+                • Le nombre de contrôles exécutés (14 dans cet exemple)<br>
+                • Le nombre d'anomalies détectées<br>
+                • Les anomalies bloquantes (données NON éligibles S2)<br><br>
+                En bas, trois graphiques:<br>
+                • Conformité par dimension (Exhaustivité, Exactitude, etc.)<br>
+                • Répartition des anomalies par criticité<br>
+                • Volumétrie du périmètre<br><br>
+                C'est simple: on voit d'un coup d'œil si les données sont bonnes ou pas."
+            </div>
+
+            <h3>Onglet 2: Solvabilité 2 — Impact (3-4 min) ⭐ CRUCIAL</h3>
+            <div class="demo-step">
+                <strong>Cliquez sur:</strong> "Solvabilité 2 — Impact" (2ème onglet)<br><br>
+                <strong>Dites:</strong> "Maintenant, voilà le cœur de l'intérêt pour GROUPE CAM. On voit l'impact FINANCIER des anomalies sur votre solvabilité.<br><br>
+
+                <strong>En haut, 4 métriques S2:</strong><br>
+                • Best Estimate : montant des provisions. Ici, c'est 3.4 millions.<br>
+                • Impact qualité : les anomalies causent une réduction de -1.8M, donc on perd 1.8M de fiabilité<br>
+                • Ratio SCR : doit être ≥ 100%. Ici c'est 130% — conforme.<br>
+                • Ratio MCR : seuil critique. Ici c'est aussi conforme.<br><br>
+
+                <strong>Les trois gauges:</strong><br>
+                • La première montre SCR vs fonds propres (130% = bon, au-dessus du minimum)<br>
+                • La deuxième montre MCR (seuil minimum, ici aussi bon)<br>
+                • La troisième compare les fonds propres disponibles vs les besoins<br><br>
+
+                <strong>Ce qu'on montre ici:</strong> Les anomalies QDD ne sont pas juste un problème informatique. C'est un problème RÉGLEMENTAIRE et FINANCIER. Si vous aviez pas ces contrôles, vous signaleriez des provisions fausses à l'ACPR."
+            </div>
+
+            <h3>Onglet 3: Contrôles (1-2 min)</h3>
+            <div class="demo-step">
+                <strong>Cliquez sur:</strong> "Contrôles" (3ème onglet)<br><br>
+                <strong>Dites:</strong> "Ici, c'est le registre des contrôles qu'on a mis en place. Chaque ligne = 1 contrôle.<br><br>
+                Vous voyez:<br>
+                • L'ID du contrôle<br>
+                • La dimension (Exhaustivité, Exactitude, Cohérence, etc.) — alignée EIOPA<br>
+                • La table concernée (Clients, Contrats, Sinistres)<br>
+                • La criticité: Bloquant (= données NON éligibles S2), Majeur, ou Mineur<br>
+                • Le statut: OK ou KO<br>
+                • Le taux de conformité<br><br>
+                Chez vous, vous en auriez 30-50 spécifiques à l'assurance BTP. Mais le concept est là."
+            </div>
+
+            <h3>Onglet 4: Piste d'Audit (1 min)</h3>
+            <div class="demo-step">
+                <strong>Cliquez sur:</strong> "Piste d'audit" (7ème onglet)<br><br>
+                <strong>Dites:</strong> "Et là, la piste d'audit. C'est CRUCIAL pour l'ACPR.<br><br>
+                Chaque contrôle exécuté est enregistré avec:<br>
+                • Date/heure d'exécution<br>
+                • Le résultat (OK/KO)<br>
+                • Le nombre d'anomalies détectées<br><br>
+                Quand l'ACPR vient vous auditer et dit 'prouvez-moi que vous avez bien contrôlé avant de faire vos QRT', vous sortez ça. Voilà la preuve."
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Résumé démo:</strong> Vous avez montré en 15 min: (1) comment on mesure la qualité, (2) comment ça impacte la solvabilité, (3) quels contrôles on met en place, (4) comment on le prouve. C'est le triangle d'or QDD-S2.
+            </div>
+        </div>
+
+        <!-- ========== SECTION 4 ========== -->
+        <div class="section">
+            <h2>❓ FAQ — Questions Attendues & Réponses</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: "Vous n'avez pas de vrai projet Solvabilité 2. Comment vous vous en sortiriez?"</div>
+                <div class="faq-answer">
+                    R: "C'est vrai, pas d'expérience S2 en production. Mais j'ai les fondamentaux. J'ai un Master en économie, donc je comprends comment marche une compagnie d'assurance. J'ai piloté une migration massive (11,700 sites), donc je sais gérer les données à grande échelle. Et j'ai étudié S2 en détail ces derniers mois. C'est juste un cadre réglementaire — l'idée derrière (avoir assez de fonds propres, des provisions justes, des données fiables) c'est du bon sens assurance. Je serais opérationnel rapidement."
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: "Pourquoi vous avez créé ça en Python/Streamlit et pas en SAS?"</div>
+                <div class="faq-answer">
+                    R: "Très bonne question! Le choix technique n'était pas important ici. Je voulais montrer rapidement comment je structurerais un dispositif QDD — les contrôles, le scoring, la piste d'audit, l'impact S2. Python/Streamlit me permet d'itérer vite et de montrer le concept. Mais bien sûr, chez vous, ce serait en SAS/SQL, avec votre architecture existante. L'important c'est la démarche, pas l'outil. Et d'ailleurs, j'ai les bases SAS (formation) et une vraie expérience en scripts SQL (chez Canal+). L'outil, je l'apprends. La compétence, c'est de comprendre les flux de données et les fiabiliser."
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: "Que ferias-tu différemment chez nous?"</div>
+                <div class="faq-answer">
+                    R: "Bonne question! Chez GROUPE CAM, je partirais de votre contexte spécifique: assurance BTP, donc risques particuliers (RC pro, décennale, flotte). Mes contrôles seraient spécialisés pour ces branches. Exemple:<br>
+                    • Pas de doublon client (vs fournisseur BTP)<br>
+                    • Montants cohérents par branche (une décennale n'a pas le même profil qu'une RC)<br>
+                    • Provisions cohérentes par secteur d'activité du client<br><br>
+                    Et bien sûr, j'intègrerais à votre stack existant (SAS, SQL, Qlik), pas Streamlit. Mais la structure — le dictionnaire, les contrôles, le scoring, l'audit trail — reste la même."
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: "Quels sont vos points faibles?"</div>
+                <div class="faq-answer">
+                    R: "Je suis honnête: pas d'expérience SAS production. Pas d'expérience Qlik. Pas d'expérience ACPR audit. MAIS: ces sont des outils et des contextes. La vraie compétence c'est de comprendre les données et les contrôler. Et ça je sais faire. Pour SAS/Qlik, je suis auteur d'apprendre rapidement — j'ai toujours maîtrisé les outils métier en 2-3 mois. Et honnêtement, j'aimerais bien avoir la chance de le faire chez GROUPE CAM."
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: "Parlez-moi de votre projet OCEA en détail."</div>
+                <div class="faq-answer">
+                    R: "Bien sûr. OCEA c'était une compagnie d'assurance spécialisée agricole. 11,723 sites à migrer d'une vieille base vers Snowflake. J'ai piloté le projet de bout en bout. On a découvert 81% d'anomalies — doublons, données manquantes, incohérences. On a mis en place un dispositif pour les nettoyer. Au final, 2,951 sites déjà migrés. Et surtout, 2,400+ sites 'orphelins' détectés — sans historique correct. Ces anomalies auraient causé des pertes énormes si on les avait pas trouvées. C'est pour ça que j'ai compris: QDD, c'est pas optionnel."
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: "Comment vous mesurez la qualité des données?"</div>
+                <div class="faq-answer">
+                    R: "Je l'ai montré dans l'app. On définit des contrôles (pas de doublons, pas de valeurs manquantes, montants cohérents). On les exécute. On compte combien de lignes échouent. On calcule le taux de conformité pour chaque contrôle. On agrège par dimension (EIOPA). On produit un score global pondéré par criticité. Et surtout, on trace tout (piste d'audit). C'est ça, le scoring QDD."
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: "Vous comprenez vraiment Solvabilité 2?"</div>
+                <div class="faq-answer">
+                    R: "Oui. Solvabilité 2 c'est: un assureur doit avoir assez d'argent (fonds propres) pour payer ses clients ET survivre en cas de crise. Les régulateurs demandent des provisions justes (Best Estimate), des capitaux requis (SCR, MCR). Tout ça repose sur des données QDD. Si les données sont pourries, les provisions sont fausses, les ratios S2 sont faux, et l'ACPR vous tape dessus. C'est pourquoi QDD est crucial. Et c'est pour ça que je vise ce poste."
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: "Avez-vous des questions pour nous?"</div>
+                <div class="faq-answer">
+                    R: "Oui, plusieurs! (Voir section 'Vos questions' ci-dessous). Mais avant, une question rapide: quelle est votre stack technique actuelle pour la QDD?"
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SECTION 5 ========== -->
+        <div class="section">
+            <h2>❔ Vos Questions à Poser (10 min)</h2>
+            <p><strong>Objectif:</strong> Montrer votre intérêt, apprendre sur le poste, et guider vers un oui.</p>
+
+            <h3>Questions Techniques:</h3>
+            <div class="numbers">
+                <div class="number-item">1. <strong>"Quelle est votre stack technique actuelle pour la QDD?"</strong> (SAS? SQL? Qlik?)</div>
+                <div class="number-item">2. <strong>"Combien de contrôles avez-vous en production?"</strong> (20? 50? 100?)</div>
+                <div class="number-item">3. <strong>"Quel est votre processus actuel pour détecter les anomalies?"</strong> (Manuel? Automatisé?)</div>
+                <div class="number-item">4. <strong>"Avez-vous déjà une piste d'audit pour les contrôles?"</strong> (Important pour ACPR)</div>
+                <div class="number-item">5. <strong>"Quelle est votre roadmap pour les 6-12 prochains mois sur QDD?"</strong></div>
+            </div>
+
+            <h3>Questions Métier:</h3>
+            <div class="numbers">
+                <div class="number-item">6. <strong>"Quels sont les défis actuels en QDD pour vos branches?"</strong> (RC? Décennale?)</div>
+                <div class="number-item">7. <strong>"Avez-vous des anomalies récurrentes qu'on pourrait adresser?"</strong></div>
+                <div class="number-item">8. <strong>"Comment êtes-vous organisés: une équipe dédiée QDD ou transverse?"</strong></div>
+            </div>
+
+            <h3>Questions Organisationnelles:</h3>
+            <div class="numbers">
+                <div class="number-item">9. <strong>"À qui je rapporterais?"</strong> (Actuariat? IT? Conformité?)</div>
+                <div class="number-item">10. <strong>"Quels sont les priorités pour ce poste dans les 3 premiers mois?"</strong></div>
+                <div class="number-item">11. <strong>"Y a-t-il des projets S2 critiques en ce moment?"</strong></div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Conseil:</strong> Posez 3-4 questions max. Écoutez vraiment les réponses. Posez des follow-ups. Montrez que vous écoutez et que vous réfléchissez déjà à comment aider.
+            </div>
+        </div>
+
+        <!-- ========== SECTION 6 ========== -->
+        <div class="section">
+            <h2>📖 Vocabulaire Solvabilité 2 à Maîtriser</h2>
+            <div class="vocab-grid">
+                <div class="vocab-card">
+                    <div class="vocab-term">Solvabilité 2</div>
+                    <div class="vocab-def">Cadre réglementaire EU stricte pour les assureurs. 3 piliers: capital requis, gouvernance, reporting.</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-term">Provisions Techniques</div>
+                    <div class="vocab-def">Argent mis de côté pour payer les sinistres futurs. Calculé à partir des données QDD.</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-term">Best Estimate</div>
+                    <div class="vocab-def">Estimation réaliste du montant des sinistres futurs. Base du calcul des provisions.</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-term">SCR</div>
+                    <div class="vocab-def">Solvency Capital Requirement. Capital requis pour survivre crise majeure (99.5% confiance).</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-term">MCR</div>
+                    <div class="vocab-def">Minimum Capital Requirement. Seuil critique. En dessous = action immédiate de l'ACPR.</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-term">QDD</div>
+                    <div class="vocab-def">Qualité des Données. Dispositif de contrôle pour s'assurer que les données alimentant S2 sont justes.</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-term">ACPR</div>
+                    <div class="vocab-def">Autorité de Contrôle Prudentiel et de Résolution (France). Régule les assureurs.</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-term">QRT</div>
+                    <div class="vocab-def">Quantitative Reporting Templates. Formulaires standardisés qu'on soumet à l'ACPR.</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-term">EIOPA</div>
+                    <div class="vocab-def">European Insurance and Occupational Pensions Authority. Définit les standards d'assurance EU.</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-term">Dimension QDD</div>
+                    <div class="vocab-def">Exhaustivité, Exactitude, Cohérence, Validité, Unicité, Intégrité. 6 dimensions EIOPA.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SECTION 7 ========== -->
+        <div class="section">
+            <h2>✅ Checklist Jour J</h2>
+            <div class="checklist">
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>Jour avant:</strong> Pratiquer le pitch 5 fois à haute voix (chronométrer 5 min)
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>Jour avant:</strong> Tester l'app en ligne (vérifier qu'elle charge bien)
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>Jour avant:</strong> Imprimer les 3 pages du guide simplifié (optionnel)
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>Jour avant:</strong> Étudier les chiffres clés (11,723 sites, 81%, 2,951 migres)
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>Matin de l'entretien:</strong> Bien dormir! (Pas de stress, c'est déjà gagné)
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>1h avant:</strong> Revoir le pitch une dernière fois
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>30 min avant:</strong> Charger la batterie du laptop (100%)
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>30 min avant:</strong> Tester la connexion WiFi du lieu
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>À apporter:</strong> Laptop + Chargeur
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>À apporter:</strong> Copies du guide simplifié (si impression)
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>À apporter:</strong> Notes avec le lien de l'app: https://samadkod-x2suqsj8xwudlzhjx8nvz7.streamlit.app/
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>À apporter:</strong> Bloc-notes + stylo
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>Tenue:</strong> Professionnel (costard/tailleur pour un 1er entretien assurance)
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>Arrivée:</strong> 10 min avant (pas de retard, pas trop tôt)
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>Pendend l'entretien:</strong> Écouter vraiment (pas juste réciter), maintenir contact visuel
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox"> <strong>Après l'entretien:</strong> Envoyer un email de remerciement le jour même
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SECTION 8 ========== -->
+        <div class="section">
+            <h2>🚀 Conseils Comportement</h2>
+
+            <h3>Pendant l'Entretien:</h3>
+            <div class="success-box">
+                ✅ <strong>Confiance:</strong> Vous êtes légitime. Master éco + 11,700 sites + QDD = vous en savez plus qu'on peut croire.<br><br>
+                ✅ <strong>Écoute:</strong> C'est pas une présentation = c'est une conversation. Écoutez les questions, répondez précisément.<br><br>
+                ✅ <strong>Enthousiasme:</strong> Montrez que vous êtes excité par le sujet. La passion, ça se voit et ça compte.<br><br>
+                ✅ <strong>Humilité:</strong> Dites "je ne sais pas" si vous ne savez pas. Mais propos: "...et j'aimerais l'apprendre chez vous."<br><br>
+                ✅ <strong>Concision:</strong> Répondez aux questions directement. Pas de blabla. 1-2 min par réponse max.
+            </div>
+
+            <h3>À Éviter Absolument:</h3>
+            <div class="alert-box">
+                ❌ <strong>Ne pas:</strong> Critiquer votre employeur actuel/précédent<br>
+                ❌ <strong>Ne pas:</strong> Parler du salaire avant qu'on vous le propose<br>
+                ❌ <strong>Ne pas:</strong> Utiliser le jargon tech sans l'expliquer (vous êtes chez des assureurs, pas des devs)<br>
+                ❌ <strong>Ne pas:</strong> Monter en stress si une question est difficile — respirez, prenez 5 sec, répondez honnêtement<br>
+                ❌ <strong>Ne pas:</strong> Oublier que c'est une CONVERSATION, pas un interrogatoire
+            </div>
+        </div>
+
+        <!-- ========== SECTION 9 ========== -->
+        <div class="section">
+            <h2>📊 Chiffres Clés à Retenir</h2>
+            <div class="numbers">
+                <div class="number-item"><span class="number-value">11,723</span> sites migrés chez OCEA</div>
+                <div class="number-item"><span class="number-value">81 %</span> taux de nettoyage des anomalies</div>
+                <div class="number-item"><span class="number-value">2,951</span> sites déjà migrés avec succès</div>
+                <div class="number-item"><span class="number-value">2,400+</span> sites orphelins détectés (anomalies critiques)</div>
+                <div class="number-item"><span class="number-value">14</span> contrôles QDD dans la démo</div>
+                <div class="number-item"><span class="number-value">3</span> piliers de Solvabilité 2 (Quantitatif, Qualitatif, Transparence)</div>
+                <div class="number-item"><span class="number-value">6</span> dimensions EIOPA (Exhaustivité, Exactitude, Cohérence, Validité, Unicité, Intégrité)</div>
+            </div>
+        </div>
+
+        <!-- ========== SECTION 10 ========== -->
+        <div class="section">
+            <h2>🎯 Résumé — La Stratégie Gagnante</h2>
+
+            <div class="pitch-box">
+                <strong>En 60 sec:</strong><br><br>
+                1. Vous êtes un Master éco avec expérience assurance réelle (OCEA)<br>
+                2. Vous avez compris que QDD = protection de la solvabilité<br>
+                3. Vous avez créé un prototype pour montrer votre compréhension<br>
+                4. Vous connaissez les impacts financiers (Best Estimate, SCR, MCR)<br>
+                5. Vous êtes prêt à apprendre SAS/Qlik et la cultureurance spécifique GROUPE CAM<br><br>
+                → Résultat: un candidat credible, préparé, et motivé.
+            </div>
+
+            <div class="success-box">
+                <strong>🎁 Bonus — Email de Remerciement (à envoyer le même jour):</strong><br><br>
+                "Chère Équipe,<br><br>
+                Merci beaucoup de m'avoir reçu aujourd'hui. C'était une vraie discussion enrichissante. Vos défis en QDD et votre vision pour Solvabilité 2 correspondent parfaitement à mes aspirations.<br><br>
+                Je suis enthousiaste à l'idée de contribuer à fiabiliser vos données et renforcer votre conformité S2. N'hésitez pas si vous avez des questions.<br><br>
+                Cordialement,<br>
+                [Votre nom]"
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 60px; padding-top: 30px; border-top: 2px solid #e0e0e0; color: #999;">
+            <p><strong>Vous êtes prêt!</strong> Allez-y avec confiance. 💪</p>
+            <p style="margin-top: 10px;">Lien app: https://samadkod-x2suqsj8xwudlzhjx8nvz7.streamlit.app/</p>
+        </div>
+    </div>
+</body>
+</html>
