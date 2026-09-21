@@ -1,0 +1,26 @@
+element_id,nom_metier,nom_technique,definition,type,valeurs_autorisees,proprietaire,confidentialite,usage_reglementaire
+C001,Numéro de police,police,Identifiant unique du contrat d'assurance,STRING,alphanumérique max 20 chars,Souscription,Public,Solvabilité 2 QRT
+C002,Assuré,assure,Entreprise couverte par la police,STRING,nom entreprise BTP,Souscription,Confidentiel,Solvabilité 2
+C003,Date d'effet,date_effet,Date de début de couverture,DATE,YYYY-MM-DD,Souscription,Public,Solvabilité 2
+C004,Date de résiliation,date_resiliation,Date de fin de couverture,DATE,YYYY-MM-DD ou NULL,Souscription,Public,Solvabilité 2
+C005,Branche d'assurance,branche,Type de garantie principale,"ENUM[RC_DECENNALE, RC_PRO, DO, MRP, FLOTTE]",RC_DECENNALE | RC_PRO | DO | MRP | FLOTTE,Tarification,Public,Solvabilité 2 QRT
+C006,Prime émise,prime_emise,Prime brute annualisée en EUR,DECIMAL,0.00 - 9999999.99,Tarification,Confidentiel,Solvabilité 2 QRT
+C007,Prime cédée réassurance,prime_cedee,Part de prime cédée en réassurance,DECIMAL,0.00 - prime_emise,Réassurance,Confidentiel,Solvabilité 2 QRT
+C008,Taux de réassurance,taux_reassurance,Pourcentage de prime cédée,DECIMAL,0.0 - 1.0,Réassurance,Public,S2 Reporting
+C009,Ligne d'activité S2,lob_s2,"Ligne d'activité Solvabilité 2","ENUM[M1_BTP_DMG, M2_BTP_RC, M3_BTP_FLOTTE]",M1_BTP_DMG | M2_BTP_RC | M3_BTP_FLOTTE,Actuariat,Public,Solvabilité 2 QRT
+C010,Segment de marché,segment,"Segmentation client","ENUM[BTP, Industrie, Commerce]",BTP | Industrie | Commerce,Tarification,Public,S2 Reporting
+S001,Numéro de sinistre,sinistre_id,Identifiant unique du sinistre,STRING,alphanumérique max 20 chars,Sinistralité,Public,Solvabilité 2
+S002,Numéro de police (sinistre),police,Lien vers police,STRING,ref contrats.police,Sinistralité,Public,Solvabilité 2 QRT
+S003,Date de survenance,date_survenance,Date du fait générateur du sinistre,DATE,YYYY-MM-DD,Sinistralité,Public,Solvabilité 2 QRT
+S004,Date de déclaration,date_declaration,Date de signalement du sinistre,DATE,YYYY-MM-DD >= date_survenance,Sinistralité,Public,Solvabilité 2 QRT
+S005,Date de clôture,date_clôture,Date de règlement définitif,DATE,YYYY-MM-DD ou NULL,Sinistralité,Public,Solvabilité 2 QRT
+S006,Date de réouverture,date_reouverture,Date de réouverture après clôture,DATE,YYYY-MM-DD > date_clôture ou NULL,Sinistralité,Public,Solvabilité 2
+S007,Montant brut sinistre,montant_brut,Montant total du sinistre avant réductions,DECIMAL,0.00 - 99999999.99,Sinistralité,Confidentiel,Solvabilité 2 QRT
+S008,Montant net sinistre,montant_net,Montant après franchises et limites,DECIMAL,0.00 - montant_brut,Sinistralité,Confidentiel,Solvabilité 2 QRT
+S009,Statut sinistre,statut,"État du sinistre","ENUM[OUVERT, RESOLU, REOUVERT, EXCLU]",OUVERT | RESOLU | REOUVERT | EXCLU,Sinistralité,Public,Solvabilité 2
+S010,Montant résolution,montant_resolution,Montant total réglé,DECIMAL,0.00 - montant_net,Sinistralité,Confidentiel,Solvabilité 2 QRT
+P001,Montant prime émise,montant_emis,Prime brute pour la période,DECIMAL,0.00 - 9999999.99,Tarification,Confidentiel,Solvabilité 2 QRT
+P002,Montant prime acquise,montant_acquis,Prime acquise pour la période,DECIMAL,0.00 - montant_emis,Tarification,Confidentiel,Solvabilité 2 QRT
+P003,Exercice comptable,exercice,Année de référence,INTEGER,YYYY (2020-2050),Tarification,Public,Solvabilité 2 QRT
+PR001,Provision technique,montant_provision,Réserve pour sinistres à venir,DECIMAL,0.00 - 99999999.99,Actuariat,Confidentiel,Solvabilité 2 QRT
+PR002,Date d'arrêté,date_arrete,Date de référence des provisions,DATE,YYYY-MM-DD,Actuariat,Public,Solvabilité 2 QRT

@@ -1,0 +1,16 @@
+ctrl_id,libelle,table_cible,champ,type_controle,parametres,critere_art82,criticite,domaine,proprietaire,seuil_tolerance,actif
+EXHAUS_01,Champs obligatoires non nuls,contrats,"police,assure,prime_emise",NON_NUL,"{""champs"": [""police"", ""assure"", ""prime_emise""]}",Complétude,Bloquant,Exhaustivité,Équipe QDD,0,1
+EXACT_01,Unicité des clés métier,contrats,police,UNIQUE,"{""clé"": ""police""}",Exactitude,Bloquant,Unicité,Équipe QDD,0,1
+EXACT_02,Montants négatifs illégaux,sinistres,montant_brut,PLAGE,"{""min"": 0, ""max"": 1000000}",Exactitude,Bloquant,Exactitude,Équipe QDD,0,1
+COHER_01,Dates cohérentes (survenance < déclaration < clôture),sinistres,"date_survenance,date_declaration,date_clôture",COHERENCE_DATES,"{""ordre"": [""date_survenance"", ""date_declaration"", ""date_clôture""]}",Exactitude,Majeur,Cohérence,Équipe QDD,0,1
+COHER_02,Sinistre rouvert cohérent,sinistres,"date_clôture,date_reouverture",COHERENCE_DATES,"{""ordre"": [""date_clôture"", ""date_reouverture""]}",Exactitude,Majeur,Cohérence,Équipe QDD,0,1
+COHER_03,Pas de doublon sur jointures primes,primes,"police,garantie",UNIQUE,"{""clé"": [""police"", ""garantie""]}",Exactitude,Majeur,Cohérence,Équipe QDD,0,1
+VALID_01,Branches dans référentiel,contrats,branche,REFERENTIEL,"{""domaine"": [""RC_DECENNALE"", ""RC_PRO"", ""DO"", ""MRP"", ""FLOTTE""]}",Appropriateness,Majeur,Validité,Équipe QDD,0,1
+VALID_02,Segments dans référentiel,contrats,segment,REFERENTIEL,"{""domaine"": [""BTP"", ""Industrie"", ""Commerce""]}",Appropriateness,Majeur,Validité,Équipe QDD,0,1
+VALID_03,Taux format numérique (0.0-1.0),contrats,taux_reassurance,PLAGE,"{""min"": 0, ""max"": 1, ""type"": ""float""}",Appropriateness,Mineur,Validité,Équipe QDD,0,1
+VALID_04,LoB Solvabilité 2 valide,contrats,lob_s2,REFERENTIEL,"{""domaine"": [""M1_BTP_DMG"", ""M2_BTP_RC"", ""M3_BTP_FLOTTE""]}",Appropriateness,Majeur,Validité,Équipe QDD,0,1
+VALID_05,Statut sinistre valide,sinistres,statut,REFERENTIEL,"{""domaine"": [""OUVERT"", ""RESOLU"", ""REOUVERT"", ""EXCLU""]}",Appropriateness,Majeur,Validité,Équipe QDD,0,1
+COHER_04,Provisions cohérentes,sinistres,"montant_resolution,montant_derniere_provision",COHERENCE_DATES,"{""formule"": ""montant_resolution <= montant_clos""}",Exactitude,Majeur,Cohérence,Équipe QDD,0,1
+COHER_05,Réconciliation N vs N-1 (volumétrie),contrats,"prime_emise,exercice",VARIATION_N_N1,"{""tolerance"": 0.1}",Exactitude,Majeur,Cohérence,Équipe QDD,100,1
+COHER_06,Réconciliation primes source vs cible,primes,"montant_emis,montant_acquis",RECONCILIATION,"{""tolerance"": 0.05}",Exactitude,Majeur,Réconciliation,Équipe QDD,100,1
+COHER_07,Réassurance cohérente,contrats,"prime_emise,prime_cedee",PLAGE,"{""condition"": ""prime_cedee <= prime_emise""}",Exactitude,Majeur,Cohérence,Équipe QDD,0,1

@@ -1,0 +1,11 @@
+panne_id,libelle,table,type_anomalie,domaine,criticite,ctrl_id_detecteur
+1,Date survenance manquante,sinistres,EXHAUS,Exhaustivité,Bloquant,EXHAUS_01
+2,Doublon de police,contrats,UNICITE,Unicité,Bloquant,EXACT_01
+3,Montant provision négative,sinistres,EXACTITUDE,Exactitude,Bloquant,EXACT_02
+4,Sinistre déclaré avant survenance,sinistres,COHERENCE,Cohérence,Majeur,COHER_01
+5,Garantie hors référentiel,contrats,VALIDITE,Validité,Majeur,VALID_01
+6,Sinistre rouvert exclu à tort,sinistres,COHERENCE,Cohérence,Majeur,COHER_02
+7,Jointure 1-N doublant primes,primes,COHERENCE,Cohérence,Majeur,COHER_03
+8,Taux mal formaté (texte au lieu décimal),contrats,VALIDITE,Validité,Mineur,VALID_03
+9,Chute anormale volumétrie N vs N-1,contrats,COHERENCE,Cohérence,Majeur,COHER_05
+10,Écart réconciliation primes source vs cible,primes,COHERENCE,Réconciliation,Majeur,COHER_06

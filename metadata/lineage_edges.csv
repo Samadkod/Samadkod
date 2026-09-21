@@ -1,0 +1,28 @@
+objet_source,champ_source,objet_cible,champ_cible,transformation,programme
+SOURCE_POLICIES,policy_id,contrats,police,identity,etl_policies
+SOURCE_POLICIES,policy_holder,contrats,assure,trim(),etl_policies
+SOURCE_POLICIES,effective_date,contrats,date_effet,to_date(format='YYYY-MM-DD'),etl_policies
+SOURCE_POLICIES,end_date,contrats,date_resiliation,to_date(format='YYYY-MM-DD'),etl_policies
+SOURCE_POLICIES,branch_code,contrats,branche,branch_mapping(),etl_policies
+SOURCE_POLICIES,annual_premium,contrats,prime_emise,cast_decimal(),etl_policies
+SOURCE_POLICIES,reinsurance_rate,contrats,taux_reassurance,cast_decimal(min=0 max=1),etl_policies
+SOURCE_POLICIES,lob_s2_code,contrats,lob_s2,lob_mapping(),etl_policies
+SOURCE_POLICIES,market_segment,contrats,segment,segment_mapping(),etl_policies
+SOURCE_CLAIMS,claim_id,sinistres,sinistre_id,identity,etl_claims
+SOURCE_CLAIMS,policy_link,sinistres,police,ref_lookup(contrats.police),etl_claims
+SOURCE_CLAIMS,occurrence_date,sinistres,date_survenance,to_date(format='YYYY-MM-DD'),etl_claims
+SOURCE_CLAIMS,report_date,sinistres,date_declaration,to_date(format='YYYY-MM-DD'),etl_claims
+SOURCE_CLAIMS,close_date,sinistres,date_clôture,to_date(format='YYYY-MM-DD'),etl_claims
+SOURCE_CLAIMS,reopen_date,sinistres,date_reouverture,to_date(format='YYYY-MM-DD'),etl_claims
+SOURCE_CLAIMS,amount_gross,sinistres,montant_brut,cast_decimal(),etl_claims
+SOURCE_CLAIMS,amount_net,sinistres,montant_net,cast_decimal(),etl_claims
+SOURCE_CLAIMS,claim_status,sinistres,statut,status_mapping(),etl_claims
+SOURCE_CLAIMS,amount_settled,sinistres,montant_resolution,cast_decimal(),etl_claims
+SOURCE_PREMIUMS,premium_emitted,primes,montant_emis,cast_decimal(),etl_premiums
+SOURCE_PREMIUMS,premium_earned,primes,montant_acquis,cast_decimal(),etl_premiums
+SOURCE_PREMIUMS,accounting_year,primes,exercice,cast_int(),etl_premiums
+SOURCE_PROVISIONS,reserve_amount,provisions,montant_provision,cast_decimal(),etl_provisions
+SOURCE_PROVISIONS,valuation_date,provisions,date_arrete,to_date(format='YYYY-MM-DD'),etl_provisions
+contrats,prime_emise,primes,montant_emis,join_on_policy,calcul_acquis
+contrats,taux_reassurance,contrats,prime_cedee,multiply(prime_emise * taux_reassurance),calcul_cedee
+sinistres,montant_net,provisions,montant_provision,estimate_reserve(),calcul_provisions
