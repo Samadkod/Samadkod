@@ -113,11 +113,10 @@ st.markdown("---")
 st.markdown("## 🚀 Exécution du Moteur")
 
 with st.spinner("⏳ Génération des données synthétiques..."):
-    rng = __import__("numpy").random.default_rng(seed)
     datasets = generer_jeu_donnees(
-        nb_clients=nb_clients,
-        nb_contrats=nb_contrats,
-        nb_sinistres=nb_sinistres,
+        n_clients=nb_clients,
+        n_contrats=nb_contrats,
+        n_sinistres=nb_sinistres,
         seed=seed
     )
 
