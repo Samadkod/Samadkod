@@ -85,6 +85,8 @@ class ControlEngine:
                         anomalies.append({
                             "anomaly_id": anomaly_id,
                             "run_id": run_id,
+                            "ctrl_id": ctrl_id,
+                            "table_cible": table_cible,
                             "cle_metier": cle_metier,
                             "champ": row["champ"],
                             "valeur_attendue": "",

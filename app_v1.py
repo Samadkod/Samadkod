@@ -193,25 +193,28 @@ with tab_anomalies:
             st.metric("🔴 Total Anomalies", len(anomalies_df))
 
         with col2:
-            st.metric("📊 Tables Affectées", anomalies_df["table_cible"].nunique())
+            tables_count = anomalies_df["table_cible"].nunique() if "table_cible" in anomalies_df.columns else 0
+            st.metric("📊 Tables Affectées", tables_count)
 
         with col3:
-            st.metric("🏷️ Contrôles Touchés", anomalies_df["ctrl_id"].nunique())
+            ctrls_count = anomalies_df["ctrl_id"].nunique() if "ctrl_id" in anomalies_df.columns else 0
+            st.metric("🏷️ Contrôles Touchés", ctrls_count)
 
         st.markdown("---")
         st.dataframe(anomalies_df, use_container_width=True, hide_index=True)
 
         # Graphique anomalies par contrôle
-        anom_by_ctrl = anomalies_df["ctrl_id"].value_counts()
-        fig = px.bar(
-            x=anom_by_ctrl.index,
-            y=anom_by_ctrl.values,
-            labels={"x": "Contrôle", "y": "Nombre d'Anomalies"},
-            title="Anomalies par Contrôle",
-            color_discrete_sequence=["#ff5151"]
-        )
-        fig.update_layout(height=400)
-        st.plotly_chart(fig, use_container_width=True)
+        if "ctrl_id" in anomalies_df.columns:
+            anom_by_ctrl = anomalies_df["ctrl_id"].value_counts()
+            fig = px.bar(
+                x=anom_by_ctrl.index,
+                y=anom_by_ctrl.values,
+                labels={"x": "Contrôle", "y": "Nombre d'Anomalies"},
+                title="Anomalies par Contrôle",
+                color_discrete_sequence=["#ff5151"]
+            )
+            fig.update_layout(height=400)
+            st.plotly_chart(fig, use_container_width=True)
 
 # ========= TAB 3: Registre Contrôles =========
 with tab_registre:
