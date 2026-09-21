@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déployer Sentinel QDD-S2 sur Streamlit Cloud</title>
+    <style>
+        :root {
+            --primary: #1f77b4;
+            --success: #16a34a;
+            --warning: #f59e0b;
+            --danger: #dc2626;
+            --bg: #ffffff;
+            --bg-alt: #f0f2f6;
+            --text: #262730;
+            --text-light: #606366;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0e1117;
+                --bg-alt: #161b22;
+                --text: #e6edf3;
+                --text-light: #8b949e;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, var(--primary), #0ea5e9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .step {
+            background: var(--bg-alt);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 8px;
+            counter-increment: step-counter;
+        }
+
+        .steps {
+            counter-reset: step-counter;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .step h3 {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+
+        .step p {
+            margin: 10px 0;
+            color: var(--text-light);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #15803d;
+        }
+
+        .info-box {
+            background: rgba(31, 119, 180, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .code-block {
+            background: var(--bg-alt);
+            border: 1px solid var(--text-light);
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin: 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--text-light);
+        }
+
+        th {
+            background: var(--bg-alt);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            padding-left: 40px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid var(--bg);
+        }
+
+        .timeline-item:after {
+            content: "";
+            position: absolute;
+            left: 9px;
+            top: 24px;
+            width: 2px;
+            height: calc(100% + 20px);
+            background: var(--primary);
+        }
+
+        .timeline-item:last-child:after {
+            display: none;
+        }
+
+        .faq {
+            margin: 40px 0;
+        }
+
+        .faq-item {
+            background: var(--bg-alt);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .faq-item:hover {
+            border-left-color: var(--primary);
+        }
+
+        .faq-question {
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            margin-top: 10px;
+            color: var(--text-light);
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+
+        .emoji {
+            font-size: 1.3em;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><span class="emoji">🛡️</span>Sentinel QDD-S2</h1>
+            <p class="subtitle">Déployer sur Streamlit Cloud</p>
+            <div class="status-badge"><span class="emoji">✅</span>Code prêt</div>
+        </header>
+
+        <div class="info-box">
+            <strong>Status du déploiement :</strong>
+            <ul class="checklist">
+                <li>Application structurée et testée</li>
+                <li>Code poussé sur GitHub (branche <code>claude/deploy-streamlit-github-feemnr</code>)</li>
+                <li>Dépôt : <strong><a href="https://github.com/Samadkod/Samadkod" target="_blank">github.com/Samadkod/Samadkod</a></strong></li>
+            </ul>
+        </div>
+
+        <h2><span class="emoji">🚀</span>3 étapes pour deployer en ligne (5 min)</h2>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Aller sur Streamlit Cloud</h3>
+                <p>Accédez au site officiel Streamlit Community Cloud</p>
+                <a href="https://share.streamlit.io/" target="_blank" class="cta-button">
+                    Ouvrir Streamlit Cloud →
+                </a>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Créer une nouvelle app</h3>
+                <p>Sélectionnez votre repo GitHub, la branche et le fichier principal</p>
+                <div class="code-block">
+Repository: Samadkod/Samadkod
+Branch: claude/deploy-streamlit-github-feemnr
+Main file: app.py
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Déployer et attendre</h3>
+                <p>Cliquez "Deploy" et attendez 2-3 minutes. C'est tout ! ✨</p>
+            </div>
+        </div>
+
+        <h2><span class="emoji">📋</span>Détails du déploiement</h2>
+
+        <h3>Fichiers requis</h3>
+        <ul class="checklist">
+            <li><code>app.py</code> — Application principale</li>
+            <li><code>requirements.txt</code> — Dépendances Python</li>
+            <li><code>src/</code> — Modules métier</li>
+            <li><code>.streamlit/config.toml</code> — Configuration</li>
+        </ul>
+
+        <h3>Dépendances</h3>
+        <div class="code-block">
+streamlit==1.38.0
+pandas==2.2.2
+numpy==1.26.4
+plotly==5.23.0
+openpyxl==3.1.5
+        </div>
+
+        <h3>Paramétrage Streamlit Cloud</h3>
+        <table>
+            <tr>
+                <th>Paramètre</th>
+                <th>Valeur</th>
+            </tr>
+            <tr>
+                <td>Repository</td>
+                <td><code>Samadkod/Samadkod</code></td>
+            </tr>
+            <tr>
+                <td>Branch</td>
+                <td><code>claude/deploy-streamlit-github-feemnr</code></td>
+            </tr>
+            <tr>
+                <td>Main file path</td>
+                <td><code>app.py</code></td>
+            </tr>
+        </table>
+
+        <h2><span class="emoji">🧪</span>Tester avant de présenter</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>En local (avant de montrer à un recruteur)</strong>
+                <div class="code-block" style="margin-top: 10px;">
+pip install -r requirements.txt
+streamlit run app.py
+                </div>
+                <p style="color: var(--text-light);">Ouvre automatiquement http://localhost:8501</p>
+            </div>
+
+            <div class="timeline-item">
+                <strong>Voir votre app en ligne</strong>
+                <p>Après déploiement, Streamlit génère une URL publique :</p>
+                <div class="code-block">
+https://sentinel-qdd-s2-<random>.streamlit.app
+                </div>
+                <p style="color: var(--text-light);">Partageable sans limite, accessible partout (desktop, mobile, tablet)</p>
+            </div>
+        </div>
+
+        <h2><span class="emoji">🎤</span>Pitch pour l'entretien (30 sec)</h2>
+        <div class="info-box" style="background: rgba(34, 197, 94, 0.1); border-left-color: var(--success);">
+            <p><strong>"Pour montrer ma compréhension du dispositif QDD Solvabilité 2, j'ai construit ce prototype en Python/Streamlit. Il reprend vos livrables de gouvernance : dictionnaire de données, cartographie/lignage, 14 contrôles qualité structurés sur les dimensions EIOPA, scorecard par dimension, et piste d'audit exportable."</strong></p>
+            <p style="color: var(--text-light); margin-bottom: 0;">→ Les 3 dimensions clés à citer : <strong>Exhaustivité · Exactitude · Pertinence</strong> (EIOPA)</p>
+        </div>
+
+        <h2><span class="emoji">❓</span>Questions fréquentes</h2>
+        <div class="faq">
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-question">
+                    <span>Que faire si Streamlit Cloud dit "Repository not found" ?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Vérifiez que votre dépôt GitHub est <strong>public</strong> et que vous êtes connecté avec le bon compte. Si le repo est privé, rendez-le public ou donnez accès à votre compte GitHub à Streamlit Cloud.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-question">
+                    <span>Combien de temps pour que l'app soit en ligne ?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    En général 2-3 minutes. Streamlit installe les dépendances, build l'app, et vous génère une URL. Vous verrez une barre de progression en temps réel.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-question">
+                    <span>Est-ce que c'est gratuit ?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    ✅ Oui, Streamlit Community Cloud est <strong>gratuit</strong>. Vous avez un limite d'une app gratuite au départ, puis vous pouvez acheter des "credits" pour plus d'apps, mais c'est sans risque pour tester.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-question">
+                    <span>Mes données sont-elles sauvegardées sur l'app en ligne ?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Non. Les données sont synthétiques et régénérées à chaque chargement. Seul le CSV/Excel que vous exportez manuellement est conservé sur votre machine.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-question">
+                    <span>Puis-je modifier l'app après le déploiement ?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Oui. Modifiez le code sur GitHub, commitez, et Streamlit Cloud redéploie automatiquement la version la plus récente (~1-2 min). Testez toujours en local d'abord.
+                </div>
+            </div>
+        </div>
+
+        <h2><span class="emoji">🎁</span>Avant l'entretien</h2>
+        <ul class="checklist">
+            <li>Testez l'app en local pour vérifier les performances</li>
+            <li>Mémorisez les 3 dimensions EIOPA (Exhaustivité, Exactitude, Pertinence)</li>
+            <li>Explorez les onglets clés : Synthèse qualité, Cartographie & lignage, Piste d'audit</li>
+            <li>Ayez l'URL Streamlit Cloud sous la main (format : <code>https://sentinel-qdd-s2-*.streamlit.app</code>)</li>
+        </ul>
+
+        <div class="info-box" style="background: rgba(251, 146, 60, 0.1); border-left-color: var(--warning); margin-top: 40px;">
+            <strong><span class="emoji">⚡</span>Astuce récruteur :</strong> Les recruteurs apprécient quand vous montrez que vous pouvez <strong>déployer en ligne rapidement</strong>. C'est un bon point pour montrer votre autonomie et votre compréhension des DevOps/MLOps modernes.
+        </div>
+
+        <footer style="text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--text-light); color: var(--text-light);">
+            <p>✨ Bonne chance pour votre candidature ! 🍀</p>
+            <p style="font-size: 0.9em;">Déployé par Claude Code | <a href="https://claude.ai/code" style="color: var(--primary); text-decoration: none;">https://claude.ai/code</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll for FAQ
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Close other items
+                document.querySelectorAll('.faq-item.active').forEach(other => {
+                    if (other !== this) other.classList.remove('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

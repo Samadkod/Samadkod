@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Entretien - Sentinel QDD-S2</title>
+    <style>
+        :root {
+            --primary: #1f77b4;
+            --success: #16a34a;
+            --warning: #f59e0b;
+            --danger: #dc2626;
+            --bg: #ffffff;
+            --bg-alt: #f0f2f6;
+            --text: #262730;
+            --text-light: #606366;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0e1117;
+                --bg-alt: #161b22;
+                --text: #e6edf3;
+                --text-light: #8b949e;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #0ea5e9);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .url-box {
+            background: var(--bg-alt);
+            border: 2px solid var(--primary);
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        h3 {
+            color: var(--text);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .scenario {
+            background: var(--bg-alt);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .script {
+            background: var(--bg-alt);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            border-radius: 4px;
+            color: var(--text-light);
+        }
+
+        .tab-guide {
+            background: var(--bg-alt);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .tab-guide strong {
+            color: var(--primary);
+        }
+
+        .qa {
+            background: var(--bg-alt);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            border-left: 4px solid var(--danger);
+        }
+
+        .qa-q {
+            font-weight: 600;
+            color: var(--danger);
+            margin-bottom: 10px;
+        }
+
+        .qa-a {
+            color: var(--text-light);
+            margin-left: 20px;
+            padding-top: 10px;
+            border-top: 1px solid var(--text-light);
+            margin-top: 10px;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .checklist li:before {
+            content: "☐ ";
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .key-point {
+            background: rgba(22, 163, 74, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .warning-box {
+            background: rgba(220, 38, 38, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--text-light);
+        }
+
+        th {
+            background: var(--bg-alt);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .emoji {
+            font-size: 1.3em;
+            margin-right: 5px;
+        }
+
+        .accordion {
+            margin: 15px 0;
+        }
+
+        .accordion-button {
+            background: var(--bg-alt);
+            border: 1px solid var(--text-light);
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            width: 100%;
+            text-align: left;
+            transition: all 0.3s;
+        }
+
+        .accordion-button:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .accordion-content {
+            display: none;
+            background: var(--bg-alt);
+            padding: 15px;
+            margin-top: 5px;
+            border-radius: 4px;
+        }
+
+        .accordion-content.active {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--text-light);
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><span class="emoji">🎤</span>Guide d'Entretien — Sentinel QDD-S2</h1>
+            <p class="subtitle">GROUPE CAM · Charge(e) d'Études Qualité des Données Solvabilité 2</p>
+        </header>
+
+        <div class="url-box">
+            <strong>🔗 URL de l'app à partager :</strong><br>
+            https://samadkod-x2suqsj8xwudlzhjx8nvz7.streamlit.app/
+        </div>
+
+        <h2><span class="emoji">⏰</span>Timing de la Présentation</h2>
+        <p>Ne montrez PAS l'app dès le départ. Attendez un moment naturel :</p>
+        <ul style="margin-left: 20px; margin-top: 10px;">
+            <li>✅ Si on vous demande : "Parlez-nous d'un projet QDD"</li>
+            <li>✅ Si on dit : "Vous n'avez pas d'expérience Solvabilité 2"</li>
+            <li>✅ Si vous sentez qu'il faut prouver votre compréhension</li>
+            <li>❌ PAS au début ("désolé, avant de montrer une app, parlons un peu de vous")</li>
+        </ul>
+
+        <h2><span class="emoji">🎬</span>3 Scénarios d'Ouverture</h2>
+
+        <div class="scenario">
+            <strong>Scénario 1 : "Parlez-nous d'un projet QDD"</strong>
+            <div class="script">
+                "Chez OCEA, j'ai piloté la qualité d'une migration 11 700+ sites. Pour montrer comment j'orchestrerais un dispositif QDD complet chez vous en SAS/SQL, j'ai construit ce prototype en Python/Streamlit en 1 semaine. Voyez ici [partagez l'écran] — c'est un exemple de comment je structurerais un QDD : dictionnaire, contrôles par dimension EIOPA, scoring pondéré, piste d'audit traçable."
+            </div>
+        </div>
+
+        <div class="scenario">
+            <strong>Scénario 2 : "Pas d'expérience Solvabilité 2"</strong>
+            <div class="script">
+                "Non, ça ne me fait pas peur. Je n'ai pas encore touché à Solvabilité 2 en production, mais j'ai étudié le cadre EIOPA et construit ce prototype pour comprendre la démarche QDD. Regardez [montrez l'app] — les dimensions (Exhaustivité, Exactitude, Cohérence) sont universelles. Solvabilité 2 rajoute la complexité réglementaire (QRT, Best Estimate), mais la fondation QDD reste la même. Je suis prêt à monter en compétence avec votre accompagnement."
+            </div>
+        </div>
+
+        <div class="scenario">
+            <strong>Scénario 3 : "Vous codez en Python/Streamlit ?"</strong>
+            <div class="script">
+                "Python m'a permis d'itérer vite sur le prototype — 1 semaine pour une démo fonctionnelle. Mais le cœur du métier, c'est SAS/SQL que vous avez identifié. J'ai les bases SAS (macros, data steps), et sur Snowflake j'ai orchestré une migration complète. C'est plus facile de passer de Python à SAS que l'inverse — ici j'ai montré la logique métier, pas l'outil."
+            </div>
+        </div>
+
+        <h2><span class="emoji">📊</span>Guide Onglet par Onglet</h2>
+
+        <div class="tab-guide">
+            <h3>Onglet 1 : SYNTHÈSE QUALITÉ ⭐ (commencez par celui-ci)</h3>
+            <p><strong>Vous dites :</strong></p>
+            <div class="script">
+                "Commençons par le dashboard principal. Vous voyez 4 choses :
+                <br><br>
+                1. Le <strong>score global</strong> en haut — c'est une moyenne pondérée par criticité. Si un contrôle 'Bloquant' échoue, il pèse plus qu'un 'Mineur'. C'est comment on mesure la capacité à alimenter les QRT.
+                <br><br>
+                2. Les <strong>KPIs</strong> — 14 contrôles lancés, X en échec, Y anomalies détectées. C'est l'alerting : 'Go/No-go pour envoyer les QRT'.
+                <br><br>
+                3. <strong>Conformité par dimension</strong> (gauche) — Exhaustivité, Exactitude, Cohérence, etc. Structure EIOPA. Si Cohérence = 95%, on a trouvé des incohérences provisions vs règlements.
+                <br><br>
+                4. <strong>Répartition anomalies</strong> (droite) — combien de Bloquants vs Majeurs vs Mineurs. Ça aide à prioriser la résolution."
+            </div>
+            <div class="key-point">
+                💡 Clé : "Tout est exportable en Excel pour les audits ACPR."
+            </div>
+        </div>
+
+        <div class="tab-guide">
+            <h3>Onglet 2 : REGISTRE DES CONTRÔLES</h3>
+            <p><strong>Vous dites :</strong></p>
+            <div class="script">
+                "C'est le registre des 14 contrôles avec leur fiche technique. Chaque contrôle a :
+                <br>• Un ID unique et libellé clair
+                <br>• Une dimension EIOPA (Exhaustivité, Exactitude, Cohérence...)
+                <br>• Une criticité (Bloquant / Majeur / Mineur)
+                <br>• Un taux de conformité
+                <br>• Un statut décisif
+                <br><br>
+                Chez OCEA, j'appliquais la même logique sur 20+ contrôles. Chez vous, vous en avez probablement 30-40 spécifiques à l'assurance."
+            </div>
+            <div class="key-point">
+                💡 Clé : "Chaque contrôle est déclaratif — on peut en ajouter un en 2 lignes sans toucher au moteur."
+            </div>
+        </div>
+
+        <div class="tab-guide">
+            <h3>Onglet 3 : ANOMALIES</h3>
+            <p><strong>Vous dites :</strong></p>
+            <div class="script">
+                "C'est le détail des lignes défectueuses. Vous sélectionnez un contrôle (ex : 'Règlement ≤ provision'), et vous voyez l'échantillon des enregistrements anomaliques.
+                <br><br>
+                Chez OCEA, j'avais 11 723 sites à migrer. Les anomalies restantes étaient : sites sans historique (2 400 détectés auto), écarts montants, dates incohérentes.
+                <br><br>
+                Pour chaque anomalie, vous avez une trace d'audit et un workflow de résolution : qui la répare, quand, comment."
+            </div>
+            <div class="key-point">
+                💡 Clé : "C'est l'onglet qu'on utilise le plus pour déboguer avant les QRT."
+            </div>
+        </div>
+
+        <div class="tab-guide">
+            <h3>Onglet 4 : DICTIONNAIRE DE DONNÉES</h3>
+            <p><strong>Vous dites :</strong></p>
+            <div class="script">
+                "Ici, c'est la source de vérité — le dictionnaire des données. Chaque champ documenté :
+                <br>• Quoi ? (libellé métier)
+                <br>• Où ? (table source)
+                <br>• Quel type ? (INT, DATE, DECIMAL)
+                <br>• Obligatoire ?
+                <br>• Quelles valeurs acceptées ?
+                <br>• À quoi ça sert pour Solvabilité 2 ?
+                <br><br>
+                C'est le fondement des contrôles. Sans le dictionnaire, vous ne pouvez pas valider, auditer, ou former."
+            </div>
+            <div class="key-point">
+                💡 Clé : "C'est un livrable de gouvernance réglementaire — l'ACPR veut le voir."
+            </div>
+        </div>
+
+        <div class="tab-guide">
+            <h3>Onglet 5 : CARTOGRAPHIE & LIGNAGE</h3>
+            <p><strong>Vous dites :</strong></p>
+            <div class="script">
+                "C'est le lignage complet — la traçabilité d'une donnée du système source aux QRT.
+                <br><br>
+                Source → Staging → Dispositif QDD → Datamart → Calculs S2 → QRT → BI
+                <br><br>
+                Pourquoi c'est important pour un audit ACPR ? L'auditeur demande : 'Comment calculez-vous vos provisions ?' Vous répondez : 'Voici le chemin complet, chaque étape documentée.'
+                <br><br>
+                C'est votre piste d'audit en image."
+            </div>
+            <div class="key-point">
+                💡 Clé : "Sans ce lignage, vous ne pouvez pas justifier vos QRT à l'ACPR."
+            </div>
+        </div>
+
+        <div class="tab-guide">
+            <h3>Onglet 6 : PISTE D'AUDIT ⭐ (TRÈS IMPORTANT)</h3>
+            <p><strong>Vous dites :</strong></p>
+            <div class="script">
+                "C'est la piste d'audit — chaque exécution tracée :
+                <br>• Heure exacte
+                <br>• Quel contrôle a tourné
+                <br>• Résultat (OK/KO)
+                <br>• Nombre d'anomalies
+                <br><br>
+                Chaque mois, vous exportez ce tableau en Excel/PDF pour le dossier 'Audit QDD'. Si l'ACPR demande la preuve que vous avez bien contrôlé avant les QRT, vous avez la réponse documentée.
+                <br><br>
+                C'est aussi pour déboguer : 'Ce contrôle a échoué le 12 août. Pourquoi ?' Vous avez l'historique."
+            </div>
+            <div class="key-point">
+                💡 Clé : "C'est votre meilleur allié pour les audits — ça montre que vous êtes rigoureux."
+            </div>
+        </div>
+
+        <h2><span class="emoji">❓</span>Questions Probables & Réponses Prêtes</h2>
+
+        <div class="accordion">
+            <button class="accordion-button" onclick="this.nextElementSibling.classList.toggle('active')">
+                Q: "Pourquoi Python/Streamlit et pas SAS ?"
+            </button>
+            <div class="accordion-content">
+                <div class="qa-a">
+                    <strong>Réponse :</strong> "Python m'a permis d'itérer vite — 1 semaine. Le prototype montre la logique métier : comment structurer un QDD, quelles dimensions, quels contrôles. Chez vous, c'est en SAS/SQL. Ce qui compte, c'est la démarche, pas l'outil. C'est une implémentation de la logique que je propose."
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <button class="accordion-button" onclick="this.nextElementSibling.classList.toggle('active')">
+                Q: "On a combien de contrôles en production ?"
+            </button>
+            <div class="accordion-content">
+                <div class="qa-a">
+                    <strong>Réponse :</strong> "Ici, 14 pour le concept. En production, vous en avez 30-50+ spécifiques à l'assurance/Solvabilité 2. Chaque contrôle s'ajoute en 2-3 lignes — du déclaratif. Chez OCEA, j'en avais 20+. Chez vous, Solvabilité 2 en rajoute des dizaines autour des provisions et cohérence par branche."
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <button class="accordion-button" onclick="this.nextElementSibling.classList.toggle('active')">
+                Q: "Comment gérez-vous les faux positifs ?"
+            </button>
+            <div class="accordion-content">
+                <div class="qa-a">
+                    <strong>Réponse :</strong> "Chez OCEA, j'ai appris à : (1) Documenter les règles clairement, (2) Tester sur un échantillon avant tout le parc, (3) Avoir un workflow de validation, (4) Itérer si on a trop de faux positifs. Pour Solvabilité 2, ça vaut encore plus — je me proposerais de co-construire les règles avec l'équipe Actuariat."
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <button class="accordion-button" onclick="this.nextElementSibling.classList.toggle('active')">
+                Q: "Pas d'expérience Solvabilité 2 — comment rattraperez-vous ?"
+            </button>
+            <div class="accordion-content">
+                <div class="qa-a">
+                    <strong>Réponse :</strong> "Les fondamentaux QDD sont universels — j'ai prouvé chez OCEA. Solvabilité 2 est un cadre réglementaire apprenâble. Je me proposerais de : (1) Formation S2 interne (3-4 sem), (2) Lire les guidelines EIOPA, (3) Travailler avec l'équipe Actuariat, (4) Étudier vos données existantes. J'ai déjà monté en compétence de zéro chez Canal+ et OCEA."
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <button class="accordion-button" onclick="this.nextElementSibling.classList.toggle('active')">
+                Q: "Quel est votre salaire attendu ?"
+            </button>
+            <div class="accordion-content">
+                <div class="qa-a">
+                    <strong>Réponse :</strong> "Pour un poste Data Analyst confirmé sur Strasbourg avec SAS/SQL, j'imaginais autour de 34-38k€ brut selon le package (télétravail, formation, évolutions). Mais je suis motivé par le projet lui-même : piloter un QDD Solvabilité 2. On peut en discuter selon votre grille."
+                </div>
+            </div>
+        </div>
+
+        <h2><span class="emoji">✅</span>Checklist Pré-Entretien</h2>
+        <ul class="checklist">
+            <li>Testez l'app 5 min avant l'appel (vérifiez qu'elle charge)</li>
+            <li>Ayez le lien prêt à copier/coller</li>
+            <li>Familiarisez-vous avec les 6 onglets (ouvrez chacun 1x)</li>
+            <li>Mémorisez 2-3 contrôles à citer de mémoire</li>
+            <li>Gardez ce guide ouvert (vous pouvez en background)</li>
+            <li>Ayez votre CV et l'annonce du poste à côté</li>
+            <li>Installez-vous dans un endroit calme, bonne connexion</li>
+            <li>Souriez en parlant 😊</li>
+        </ul>
+
+        <h2><span class="emoji">🚀</span>Conseils Pratiques</h2>
+        <ol style="margin-left: 20px; margin-top: 10px;">
+            <li><strong>Ne la montrez PAS à la 1ère minute</strong> — attendez qu'on la demande.</li>
+            <li><strong>Partagez l'écran avec confiance</strong> — vous avez créé ça, vous le connaissez.</li>
+            <li><strong>Restez humble</strong> — "C'est un prototype, en production on raffinerait."</li>
+            <li><strong>Reliez à OCEA</strong> — chaque onglet = une analogie avec la migration.</li>
+            <li><strong>Posez des questions en retour</strong> — pas juste de l'écoute passive.</li>
+        </ol>
+
+        <div class="warning-box">
+            <strong><span class="emoji">⚠️</span>Si le recruteur dit "c'est sympa mais Python c'est pas notre langage"</strong>
+            <br><br>
+            Répondez : "Bien sûr, vous êtes sur SAS/SQL. C'est juste un prototype pour montrer la démarche métier. La vraie implémentation se ferait dans votre stack — je suis totalement à l'aise avec ça." ✅
+        </div>
+
+        <footer>
+            <p>✨ Vous êtes prêt ! Bonne chance pour votre entretien ! 🍀</p>
+            <p>App : https://samadkod-x2suqsj8xwudlzhjx8nvz7.streamlit.app/</p>
+        </footer>
+    </div>
+
+    <script>
+        // Auto-focus first accordion on page load
+        document.querySelectorAll('.accordion-button').forEach((btn, idx) => {
+            if (idx === 0) {
+                btn.nextElementSibling.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
