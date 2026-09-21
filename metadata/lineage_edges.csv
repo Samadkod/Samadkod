@@ -1,28 +1,29 @@
-objet_source,champ_source,objet_cible,champ_cible,transformation,programme
-SOURCE_POLICIES,policy_id,contrats,police,identity,etl_policies
-SOURCE_POLICIES,policy_holder,contrats,assure,trim(),etl_policies
-SOURCE_POLICIES,effective_date,contrats,date_effet,to_date(format='YYYY-MM-DD'),etl_policies
-SOURCE_POLICIES,end_date,contrats,date_resiliation,to_date(format='YYYY-MM-DD'),etl_policies
-SOURCE_POLICIES,branch_code,contrats,branche,branch_mapping(),etl_policies
-SOURCE_POLICIES,annual_premium,contrats,prime_emise,cast_decimal(),etl_policies
-SOURCE_POLICIES,reinsurance_rate,contrats,taux_reassurance,cast_decimal(min=0 max=1),etl_policies
-SOURCE_POLICIES,lob_s2_code,contrats,lob_s2,lob_mapping(),etl_policies
-SOURCE_POLICIES,market_segment,contrats,segment,segment_mapping(),etl_policies
-SOURCE_CLAIMS,claim_id,sinistres,sinistre_id,identity,etl_claims
-SOURCE_CLAIMS,policy_link,sinistres,police,ref_lookup(contrats.police),etl_claims
-SOURCE_CLAIMS,occurrence_date,sinistres,date_survenance,to_date(format='YYYY-MM-DD'),etl_claims
-SOURCE_CLAIMS,report_date,sinistres,date_declaration,to_date(format='YYYY-MM-DD'),etl_claims
-SOURCE_CLAIMS,close_date,sinistres,date_clôture,to_date(format='YYYY-MM-DD'),etl_claims
-SOURCE_CLAIMS,reopen_date,sinistres,date_reouverture,to_date(format='YYYY-MM-DD'),etl_claims
-SOURCE_CLAIMS,amount_gross,sinistres,montant_brut,cast_decimal(),etl_claims
-SOURCE_CLAIMS,amount_net,sinistres,montant_net,cast_decimal(),etl_claims
-SOURCE_CLAIMS,claim_status,sinistres,statut,status_mapping(),etl_claims
-SOURCE_CLAIMS,amount_settled,sinistres,montant_resolution,cast_decimal(),etl_claims
-SOURCE_PREMIUMS,premium_emitted,primes,montant_emis,cast_decimal(),etl_premiums
-SOURCE_PREMIUMS,premium_earned,primes,montant_acquis,cast_decimal(),etl_premiums
-SOURCE_PREMIUMS,accounting_year,primes,exercice,cast_int(),etl_premiums
-SOURCE_PROVISIONS,reserve_amount,provisions,montant_provision,cast_decimal(),etl_provisions
-SOURCE_PROVISIONS,valuation_date,provisions,date_arrete,to_date(format='YYYY-MM-DD'),etl_provisions
-contrats,prime_emise,primes,montant_emis,join_on_policy,calcul_acquis
-contrats,taux_reassurance,contrats,prime_cedee,multiply(prime_emise * taux_reassurance),calcul_cedee
-sinistres,montant_net,provisions,montant_provision,estimate_reserve(),calcul_provisions
+objet_source,champ_source,objet_cible,champ_cible,transformation,programme,usage_s2,criticite_lignage
+SOURCE_POLICIES,policy_id,contrats,id_contrat,identity,etl_policies,QRT_S05_01 | Inventory,CRITIQUE
+SOURCE_POLICIES,policy_holder,contrats,id_client,ref_lookup(clients.id_client),etl_policies,MDM | Portefeuille,CRITIQUE
+SOURCE_POLICIES,effective_date,contrats,date_effet,to_date(format='YYYY-MM-DD'),etl_policies,PPNA Recognition | Premium Accrual,CRITIQUE
+SOURCE_POLICIES,end_date,contrats,date_echeance,to_date(format='YYYY-MM-DD'),etl_policies,Coverage Period | S2 Inventory Cut-off,MAJEUR
+SOURCE_POLICIES,branch_code,contrats,branche,branch_mapping(RC_PRO|DO|MRP|FLOTTE|DECENNALE),etl_policies,LoB Segmentation | QRT S.05,CRITIQUE
+SOURCE_POLICIES,annual_premium,contrats,prime_annuelle,cast_decimal(>=0),etl_policies,Premium Income | QRT S.05.01 | Best Estimate,CRITIQUE
+SOURCE_POLICIES,reinsurance_share,contrats,part_reassurance,cast_decimal([0-1]),etl_policies,Reinsurance | Recoverables Calc,MAJEUR
+SOURCE_POLICIES,lob_s2_code,contrats,lob_s2,lob_mapping(M1_BTP_CONST|M2_BTP_FLOTTE|M3_BTP_DECENNALE),etl_policies,SCR Calculation | Formule Standard,CRITIQUE
+SOURCE_POLICIES,market_segment,clients,segment,segment_mapping(BTP|Industrie|Commerce),etl_policies,Risk Segmentation | S2 LoB,MAJEUR
+SOURCE_CUSTOMERS,customer_id,clients,id_client,identity,etl_customers,MDM Master | Portfolio Attachment,CRITIQUE
+SOURCE_CUSTOMERS,customer_name,clients,raison_sociale,trim(),etl_customers,Legal Entity | ACPR Report,MAJEUR
+SOURCE_CUSTOMERS,siret,clients,siret,siret_format(14digits),etl_customers,ACPR Identification | MDM Key,CRITIQUE
+SOURCE_CLAIMS,claim_id,sinistres,id_sinistre,identity,etl_claims,QRT S.17 | Inventory,CRITIQUE
+SOURCE_CLAIMS,policy_link,sinistres,id_contrat,ref_lookup(contrats.id_contrat),etl_claims,Integrity Constraint | FK,CRITIQUE
+SOURCE_CLAIMS,occurrence_date,sinistres,date_survenance,to_date(format='YYYY-MM-DD'),etl_claims,Triangle Development | Run-off Cohort,CRITIQUE
+SOURCE_CLAIMS,report_date,sinistres,date_declaration,to_date(format='YYYY-MM-DD'),etl_claims,IBNR Estimation | Latency Analysis,MAJEUR
+SOURCE_CLAIMS,close_date,sinistres,date_clôture,to_date(format='YYYY-MM-DD'),etl_claims,Status Tracking | Coverage Period,MAJEUR
+SOURCE_CLAIMS,reopen_date,sinistres,date_reouverture,to_date(format='YYYY-MM-DD'),etl_claims,Tail Risk (BTP 10Y) | ORSA Scenario,MAJEUR
+SOURCE_CLAIMS,amount_gross,sinistres,montant_brut,cast_decimal(>=0),etl_claims,Reserve Estimate | QRT S.17,CRITIQUE
+SOURCE_CLAIMS,settlement_amount,sinistres,montant_reglement,cast_decimal([0-provision]),etl_claims,Run-off Pattern | Best Estimate,CRITIQUE
+SOURCE_CLAIMS,claim_status,sinistres,statut,status_mapping(OUVERT|CLOS|REOUVERT|SANS_SUITE),etl_claims,Provisioning Scope | Inventory,MAJEUR
+SOURCE_REINSURANCE,reinsurance_premium,contrats,prime_cedee,multiply(prime_annuelle * part_reassurance),etl_reinsurance,Ceded Premium | Reinsurance Accounting,MAJEUR
+SOURCE_REINSURANCE,recovery_rate,sinistres,part_reassurance,cast_decimal([0-1]),etl_reinsurance,Recoverables | Net Provisions,MAJEUR
+primes,montant_emis,controles_execution,variable_test,variation_analysis(N_vs_N1),reconciliation,Premium Variance Control | RECO_01,MAJEUR
+sinistres,montant_brut,controles_execution,variable_test,reserve_tolerance_test(p99_threshold),reconciliation,Best Estimate Variance | RECO_02,CRITIQUE
+sinistres,montant_reglement,controles_execution,coherence_test,coherence_check(reglement<=provision),reconciliation,Settlement Integrity | EXACT_05,MAJEUR
+contrats,prime_cedee,sinistres,recoverables_net,net_calculation(montant_brut - recovery),provisions,Recoverable Deduction | NET BE,CRITIQUE
+sinistres,date_survenance,controles_execution,triangle_cohort,cohort_assignment(annee_survenance),reconciliation,Triangle Bucketing | Run-off Model,CRITIQUE

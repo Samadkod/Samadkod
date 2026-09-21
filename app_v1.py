@@ -18,6 +18,7 @@ import streamlit as st
 
 from engine.control_engine import ControlEngine
 from src.data_generator import generer_jeu_donnees
+from src.data_dictionary import GLOSSAIRE_SOLVABILITE2, DIMENSIONS_QDD
 
 st.set_page_config(
     page_title="Sentinel QDD-S2 V1",
@@ -129,12 +130,13 @@ with st.spinner("⏳ Exécution des contrôles..."):
 st.success("✅ Contrôles exécutés avec succès")
 
 # ========= TABS =========
-tab_resultats, tab_anomalies, tab_registre, tab_dimensions, tab_piste_audit, tab_donnees = st.tabs([
+tab_resultats, tab_anomalies, tab_registre, tab_dimensions, tab_piste_audit, tab_glossaire, tab_donnees = st.tabs([
     "📈 Résultats Contrôles",
     "🔴 Anomalies Détectées",
     "📋 Registre Contrôles",
     "📊 Score par Dimension",
     "🔐 Piste d'Audit",
+    "📖 Glossaire S2",
     "🗂️ Données Source"
 ])
 
@@ -301,7 +303,35 @@ with tab_piste_audit:
         mime="text/csv"
     )
 
-# ========= TAB 6: Données Source =========
+# ========= TAB 6: Glossaire Solvabilité 2 =========
+with tab_glossaire:
+    st.markdown("### 📖 Glossaire Solvabilité 2 & QDD")
+    st.markdown("""
+    **Définitions essentielles** pour comprendre la gouvernance de la qualité de données
+    dans un contexte d'assurance et Solvabilité 2.
+    """)
+
+    col_gl1, col_gl2 = st.columns(2)
+
+    with col_gl1:
+        st.markdown("#### 🎯 Dimensions QDD")
+        st.markdown("""
+        Cadre de gouvernance structure la qualité de données selon 6 dimensions :
+        """)
+        for dim, desc in DIMENSIONS_QDD.items():
+            with st.expander(f"**{dim}**"):
+                st.write(desc)
+
+    with col_gl2:
+        st.markdown("#### 📊 Termes Solvabilité 2")
+        st.markdown("""
+        Vocabulaire réglementaire et actuariel spécifique à Solvabilité 2 :
+        """)
+        for term, definition in GLOSSAIRE_SOLVABILITE2.items():
+            with st.expander(f"**{term}**"):
+                st.write(definition)
+
+# ========= TAB 7: Données Source =========
 with tab_donnees:
     st.markdown("### Aperçu des Données Source")
 
