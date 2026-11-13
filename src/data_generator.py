@@ -14,7 +14,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-# Référentiels métier (branches / produits assurance professionnelle - cohérent GROUPE CAM : BTP, industrie, commerce)
+# Référentiels métier (branches / produits assurance professionnelle - assureur professionnel : BTP, industrie, commerce)
 BRANCHES = {
     "RC_PRO": "Responsabilité Civile Professionnelle",
     "DO": "Dommages Ouvrage",

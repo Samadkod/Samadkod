@@ -1,8 +1,8 @@
-# Roadmap 90 Jours — CAM QDD Industrialisation
+# Roadmap 90 Jours — Industrialisation QDD
 ## Phase Opérationnelle : Du Prototype à la Production
 
 **Dates:** J1 = Lundi (date de démarrage)  
-**Responsable:** Samadu Codon, Data Analyst QDD  
+**Responsable:** Samadou Kodon, Data Analyst QDD  
 **Objectif Final:** Dispositif QDD complet en production, conforme ACPR, prêt audit CAC
 
 ---
@@ -48,7 +48,7 @@ Semaines 13   │ Go-Live & Documentation → Handoff ACPR
 
 - [ ] Documentation initiale :
   - SQL data profiling de chaque table source
-  - Glossaire metier local (termes CAM spécifiques)
+  - Glossaire metier local (termes spécifiques à l'entreprise)
   - Schéma relationnel actuel
 
 **Livrables :**
@@ -62,14 +62,14 @@ Semaines 13   │ Go-Live & Documentation → Handoff ACPR
 
 ### Semaine 2 (J8-J12): Validation Registre Métier
 
-**🎯 Objectif :** Aligner registre contrôles avec réalité métier CAM
+**🎯 Objectif :** Aligner registre contrôles avec réalité métier
 
 **À faire :**
 - [ ] Review registre contrôles avec actuariat :
   - EXACT_05 (règlement <= provision) — valide pour dossier?
   - RECO_01 (variation N/N-1 15%) — seuil OK ou ajuster?
-  - ANOMALIE_01 (P99 * 2) — threshold adapté à CAM?
-  - Ajouter contrôles CAM-spécifiques manquants?
+  - ANOMALIE_01 (P99 * 2) — threshold adapté au portefeuille ?
+  - Ajouter contrôles spécifiques manquants?
 
 - [ ] Validation référentiels domaines :
   - Branches: [RC_PRO, DO, MRP, FLOTTE, DECENNALE] ← complet?
@@ -121,7 +121,7 @@ Semaines 13   │ Go-Live & Documentation → Handoff ACPR
 **Livrables :**
 - `Formation_QDD_CAM_Slides.pdf` (3 presentations)
 - `Data_Stewardship_Manual.md` (procédures de correction)
-- Staging environment live (https://streamlit.internal-cam/.../app_v1)
+- Staging environment live (https://streamlit.internal/.../app_v1)
 
 ---
 
@@ -133,12 +133,12 @@ Semaines 13   │ Go-Live & Documentation → Handoff ACPR
 
 **À faire :**
 - [ ] Déploiement dashboard **interne** :
-  - URL: https://streamlit.internal-cam/...
+  - URL: https://streamlit.internal/...
   - Audience: Actuariat, Primes, Sinistres, IT
   - Données: 100% production (mensuelle, date_arrete = fin mois précédent)
 
-- [ ] Customisation dashboard pour CAM :
-  - Ajouter logo CAM
+- [ ] Customisation dashboard (charte entreprise) :
+  - Ajouter logo entreprise
   - Ajouter KPIs metrics (taux conformité par domaine)
   - Ajouter drill-down par branche (RC_DECENNALE anomalies spécifiques)
   - Export anomalies → Excel (pour corrections)
@@ -206,7 +206,7 @@ Semaines 13   │ Go-Live & Documentation → Handoff ACPR
 
 - [ ] Ajuster tolérances si nécessaire :
   - RECO_02 (5% écart BE) — trop strict?
-  - RECO_01 (15% variation volume) — adapté à CAM business?
+  - RECO_01 (15% variation volume) — adapté au business ?
 
 **Livrables :**
 - `Reconciliation_Actuariat_Sign-off.pdf` (validation business)
@@ -246,7 +246,7 @@ Semaines 13   │ Go-Live & Documentation → Handoff ACPR
 
 ### Semaine 9-10 (J51-J65): SAS Macro Développement
 
-**🎯 Objectif :** Implémenter control engine en SAS (moteur production CAM)
+**🎯 Objectif :** Implémenter control engine en SAS (moteur de production)
 
 **À faire :**
 - [ ] Développer SAS macro version :
@@ -370,7 +370,7 @@ Semaines 13   │ Go-Live & Documentation → Handoff ACPR
 
 | Role | Owner | Ext. | Availability |
 |------|-------|------|---|
-| Data Analyst QDD | Samadu Codon | ext.XXX | Mon-Fri 8am-6pm |
+| Data Analyst QDD | Samadou Kodon | ext.XXX | Mon-Fri 8am-6pm |
 | Director Data | [Name] | ext.XXX | By appointment |
 | Actuariat Lead | [Name] | ext.XXX | Mon-Fri 9am-5pm |
 | IT Data Owner | [Name] | ext.XXX | Mon-Fri 8am-5pm |

@@ -1,8 +1,8 @@
-# Spécification QDD — Groupe CAM
+# Spécification QDD — Assureur BTP (cas d'étude)
 ## Dispositif Qualité de Données pour Solvabilité 2 & ACPR
 
 **Date:** 2026-09-21  
-**Auteur:** Samadu Codon, Data Analyst — CAM  
+**Auteur:** Samadou Kodon, Data Analyst  
 **Périmètre:** Assurance BTP (RC Pro, Décennale, Dommages-Ouvrage, Flotte, MRP)  
 **Référentiel:** ACPR Notice QDD, Solvabilité 2 (Directive 2015/35/UE)
 
@@ -10,7 +10,7 @@
 
 ## 1. Introduction & Contexte
 
-Le Groupe CAM s'inscrit dans le cadre réglementaire **Solvabilité 2** (S2) et respecte les exigences de gouvernance de la qualité de données (QDD) définies par l'**ACPR** (Autorité de Contrôle Prudentiel et de Résolution).
+Un assureur BTP s'inscrit dans le cadre réglementaire **Solvabilité 2** (S2) et respecte les exigences de gouvernance de la qualité de données (QDD) définies par l'**ACPR** (Autorité de Contrôle Prudentiel et de Résolution).
 
 ### 1.1 Objectifs du Dispositif QDD
 
@@ -53,7 +53,7 @@ Le Groupe CAM s'inscrit dans le cadre réglementaire **Solvabilité 2** (S2) et 
 
 | Composant | Technologie | Usage |
 |-----------|------------|-------|
-| **Moteur SAS** | SAS Macro-Program + Data Step | Environnement production interne CAM |
+| **Moteur SAS** | SAS Macro-Program + Data Step | Environnement de production interne |
 | **Moteur Python** | control_engine.py + DuckDB | Prototypage, PoC, documentation |
 | **Parity Check** | Hashage résultats | Validation bilatérale |
 
@@ -370,7 +370,7 @@ RÉASSURANCE
 
 ---
 
-## 9. Roadmap CAM (90 jours)
+## 9. Roadmap de déploiement (90 jours)
 
 ### Jours 1-30: Inventory & Écoute
 - [ ] Audit interne données existantes (volume, quality baseline)
@@ -400,7 +400,7 @@ Cet dispositif couvre les 6 dimensions ACPR :
 
 | Livrable ACPR | Composant QDD | Status |
 |---|---|---|
-| 1. Document cadre | Present spec (SPECIFICATION_QDD_CAM.md) | ✅ |
+| 1. Document cadre | Present spec (SPECIFICATION_QDD.md) | ✅ |
 | 2. Dictionnaire | src/data_dictionary.py + CSV | ✅ |
 | 3. Cartographie flux | metadata/lineage_edges.csv | ✅ |
 | 4. Lignage & traçabilité | run_id → anomaly_id → correction | ✅ |
@@ -430,7 +430,7 @@ Cet dispositif couvre les 6 dimensions ACPR :
 
 ## Conclusion
 
-Ce dispositif QDD positionne CAM pour conformité **ACPR** et **Solvabilité 2**, avec :
+Ce dispositif QDD positionne l'assureur pour conformité **ACPR** et **Solvabilité 2**, avec :
 - ✅ Métadonnées centralisées (CSV) → no hardcoding
 - ✅ Moteur générique → évolutivité
 - ✅ Parity SAS/Python → production-safe

@@ -8,7 +8,7 @@ d'exhaustivité, exactitude, intégrité référentielle et pertinence.
 Solvabilité 2 : provisions techniques, best estimate, marge de risque, QRT,
 triangles de liquidation, ORSA, réassurance (quote-part, excédent de sinistre).
 
-BTP Spécifique (CAM) : RC décennale, dommages-ouvrage → sinistres déclarés sur 10 ans.
+Spécificités BTP : RC décennale, dommages-ouvrage → sinistres déclarés sur 10 ans.
 """
 
 from __future__ import annotations
