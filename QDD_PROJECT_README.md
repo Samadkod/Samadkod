@@ -1,6 +1,6 @@
 # 🛡️ Sentinel QDD-S2 V1 — Moteur Générique Piloté par Métadonnées
 
-## CAM — Assurance BTP & Solvabilité 2 Data Quality Framework
+## Cas d'étude — Assurance BTP & Solvabilité 2 Data Quality Framework
 
 **Statut:** ✅ Production-Ready V1  
 **Version:** 1.0 | **Date:** 2026-09-21  
@@ -66,8 +66,8 @@
    │   ├── data_dictionary.csv            # Dictionnaire données (CSV export)
    │   ├── control_runs.csv               # Résultats exécutions (output)
    │   └── anomalies.csv                  # Anomalies détectées (output)
-   ├── SPECIFICATION_QDD_CAM.md           # 📄 Document cadre complet (ACPR 6 livrables)
-   ├── ROADMAP_90_JOURS_CAM.md            # 📋 Roadmap déploiement production
+   ├── SPECIFICATION_QDD.md           # 📄 Document cadre complet (ACPR 6 livrables)
+   ├── ROADMAP_90_JOURS_QDD.md            # 📋 Roadmap déploiement production
    └── requirements.txt                   # Dépendances Python
    ```
 
@@ -75,7 +75,7 @@
 
 ## 🎯 Qu'est-ce que c'est?
 
-**Sentinel QDD-S2** est un **dispositif générique de gouvernance qualité de données** conçu pour le Groupe CAM dans un contexte **Solvabilité 2 & ACPR**.
+**Sentinel QDD-S2** est un **dispositif générique de gouvernance qualité de données** conçu pour un assureur IARD / BTP dans un contexte **Solvabilité 2 & ACPR**.
 
 ### Problème résolu :
 - ❌ Contrôles qualité codés en dur → dépendance développeur
@@ -234,7 +234,7 @@ SOURCE_POLICIES                     SOURCE_CLAIMS
 - **LoB** : Line of Business (M1_BTP_CONST, M2_BTP_FLOTTE, M3_BTP_DECENNALE)
 - **Formule Standard** : Approche simplifiée SCR
 
-### BTP Spécifique (CAM)
+### Spécificités BTP
 
 - **RC Décennale** : Responsabilité civile 10 ans post-réception (tail risk)
 - **Dommages-Ouvrage** : Garantie dommages BTP sinistres décennaux
@@ -279,7 +279,7 @@ streamlit run app_v1.py
 ### Exécution Production (SAS - Future)
 
 ```sas
-/* Macro version pour production CAM */
+/* Macro version pour production */
 %include "QDD_Toolkit_CAM.sas";
 
 /* Exécute tous contrôles (lecture control_registry.csv) */
@@ -294,8 +294,8 @@ streamlit run app_v1.py
 
 | Document | Contenu | Audience |
 |----------|---------|----------|
-| **SPECIFICATION_QDD_CAM.md** | Architecture complète, dictionnaire données, référentiel contrôles, glossaire, ACPR 6 livrables | C-level, Regulatory |
-| **ROADMAP_90_JOURS_CAM.md** | Déploiement 90j (inventory, tuning, SAS macro, production), semaine par semaine | Project Manager, Delivery |
+| **SPECIFICATION_QDD.md** | Architecture complète, dictionnaire données, référentiel contrôles, glossaire, ACPR 6 livrables | C-level, Regulatory |
+| **ROADMAP_90_JOURS_QDD.md** | Déploiement 90j (inventory, tuning, SAS macro, production), semaine par semaine | Project Manager, Delivery |
 | **QDD_PROJECT_README.md** | Ce fichier — quick start, architecture, usage | Tous |
 | **src/data_dictionary.py** | Dictionnaire données (Python), glossaire S2, dimensions QDD | Developers, Métier |
 
@@ -321,7 +321,7 @@ streamlit run app_v1.py
 
 ### Pour ACPR/CAC (Audit)
 
-- [ ] Relire SPECIFICATION_QDD_CAM.md (6 livrables ACPR)
+- [ ] Relire SPECIFICATION_QDD.md (6 livrables ACPR)
 - [ ] Examiner control_registry.csv (25+ contrôles, trace)
 - [ ] Vérifier lineage_edges.csv (flux données → outputs)
 - [ ] Analyser piste d'audit (control_runs horodatés)
@@ -394,10 +394,10 @@ RECO_02,Réconciliation provisions,sinistres,...,"{""tolerance"": 0.10}"
 
 | Problème | Contact | Délai |
 |----------|---------|-------|
-| Anomalie métier (data issue) | data-steward@cam.fr | 4h |
-| Comportement moteur (bug) | samadu.kodon@gmail.com | 24h |
+| Anomalie métier (data issue) | data-steward@assureur.example | 4h |
+| Comportement moteur (bug) | samadou.kodon@gmail.com | 24h |
 | Demande nouvelle fonctionnalité | IT roadmap | Sprint+1 |
-| Audit ACPR (compliance) | COMPLIANCE_OFFICER@cam.fr | Urgent |
+| Audit ACPR (compliance) | compliance@assureur.example | Urgent |
 
 ---
 
@@ -413,8 +413,8 @@ RECO_02,Réconciliation provisions,sinistres,...,"{""tolerance"": 0.10}"
 
 ## 📄 Licence & Attribution
 
-**Créé pour :** Groupe CAM — Assurance BTP  
-**Auteur :** Samadu Codon, Data Analyst  
+**Cas d'étude :** Assurance BTP — données synthétiques  
+**Auteur :** Samadou Kodon, Data Analyst  
 **Date :** 2026-09-21  
 **Version :** 1.0 — Production Ready  
 **Technologies :** Python, Streamlit, DuckDB, SAS (future)
@@ -432,4 +432,4 @@ Pour contribuer, signaler bugs ou poser questions :
 
 **Merci d'utiliser Sentinel QDD-S2! 🛡️**
 
-*Pour CAM, par CAM — Qualité de données, traçabilité réglementaire, confiance métier.*
+*Qualité de données, traçabilité réglementaire, confiance métier.*
